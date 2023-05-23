@@ -20,7 +20,7 @@ logic [DataWidth-1:0] fifo_memory[Depth-1:0];
 logic [$clog2(Depth):0] wr_ptr, rd_ptr;
 logic full, empty;
 logic din_hs, dout_hs;
-logic [2:0] sel;
+logic [1:0] sel;
 integer count = 0;
 
 assign full = (wr_ptr[$clog2(Depth)] ^ rd_ptr[$clog2(Depth)]) && (wr_ptr[$clog2(Depth)-1:0] == rd_ptr[$clog2(Depth)-1:0]);
@@ -34,8 +34,8 @@ assign dout_val_o = !empty;
 
 
 always_ff@(posedge clk_i, negedge arst_ni) begin
-    case (sel[2:0])
-        3'b01:
+    case (sel[1:0])
+        2'b01:
             begin
                 //count  <= (count - 1);
                 wr_ptr <= wr_ptr;
@@ -44,7 +44,7 @@ always_ff@(posedge clk_i, negedge arst_ni) begin
                 else
                     rd_ptr <= '0;
             end
-        3'b10:
+        2'b10:
             begin
                 //count  <= (count +1);
                 fifo_memory [wr_ptr] <= din_i;                    
@@ -54,7 +54,7 @@ always_ff@(posedge clk_i, negedge arst_ni) begin
                     wr_ptr <= '0;
                 rd_ptr <= rd_ptr;
             end
-        3'b11: begin
+        2'b11: begin
             //count  <= count;
             fifo_memory [wr_ptr] <= din_i;
             if ((wr_ptr+1)<Depth)
