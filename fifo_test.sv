@@ -216,7 +216,26 @@ module fifo_test;
 
     result_print(
         ~prev_data_in_valid & prev_data_in_ready & prev_data_out_valid & prev_data_out_ready
-        , "Only Output side handshake during FIFO-full");
+        , "Only OUTPUT side handshake during FIFO-full");
+
+
+    for (int i = 0; i < Depth; i++) begin
+      @(posedge clk_i);
+    end
+
+    @(posedge clk_i);
+    data_in_valid_i  <= '1;
+    data_out_ready_i <= '0;
+
+    @(posedge clk_i);
+    prev_data_in_valid  = data_in_valid_i;
+    prev_data_in_ready  = data_in_ready_o;
+    prev_data_out_valid = data_out_valid_o;
+    prev_data_out_ready = data_out_ready_i;
+
+    result_print(
+        prev_data_in_valid & prev_data_in_ready & prev_data_out_valid & ~prev_data_out_ready,
+        "Only INPUT side handshake during FIFO-empty");
 
     $finish();
   end
