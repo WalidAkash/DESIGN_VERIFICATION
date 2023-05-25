@@ -1,6 +1,5 @@
 FLIST += fifo.sv
 FLIST += fifo_test.sv
-FLIST += tb_ns.sv
 
 TOP = fifo_test
 
