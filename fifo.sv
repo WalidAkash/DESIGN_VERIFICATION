@@ -40,8 +40,8 @@ module fifo #(
   assign data_in_ready_o = (str_count == Depth) ? data_out_ready_i : '1;
   assign data_out_valid_o = (str_count == 0) ? data_in_valid_i : '1;
 
-  assign wr_ptr_next = ((wr_ptr + '1) == Depth) ? '0 : wr_ptr + '1;
-  assign rd_ptr_next = ((rd_ptr + '1) == Depth) ? '0 : rd_ptr + '1;
+  assign wr_ptr_next = ((wr_ptr + 1'b1) == Depth) ? '0 : wr_ptr + '1;
+  assign rd_ptr_next = ((rd_ptr + 1'b1) == Depth) ? '0 : rd_ptr + '1;
 
   assign data_out_o = str_count ? fifo_mem[rd_ptr] : data_in_i;
 

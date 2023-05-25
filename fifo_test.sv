@@ -205,8 +205,7 @@ module fifo_test;
     data_in_valid_i  <= '0;
     data_out_ready_i <= '1;
 
-    @(posedge clk_i);
-    @(posedge clk_i);
+    repeat (2) @(posedge clk_i);
 
     prev_data_in_valid  = data_in_valid_i;
     prev_data_in_ready  = data_in_ready_o;
