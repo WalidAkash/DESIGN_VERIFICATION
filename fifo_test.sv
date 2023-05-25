@@ -187,6 +187,38 @@ module fifo_test;
       & data_out_ready_i
         , "both sides handshake when FULL");
 
+    // Reset again
+
+    apply_reset();
+
+    arst_ni <= '0;
+    @(posedge clk_i);
+    arst_ni <= '1;
+    @(posedge clk_i);
+
+    data_in_valid_i <= '1;
+    for (int i = 0; i < Depth; i++) begin
+      @(posedge clk_i);
+    end
+
+    @(posedge clk_i);
+    data_in_valid_i  <= '0;
+    data_out_ready_i <= '1;
+
+    @(posedge clk_i);
+    @(posedge clk_i);
+
+    prev_data_in_valid  = data_in_valid_i;
+    prev_data_in_ready  = data_in_ready_o;
+    prev_data_out_valid = data_out_valid_o;
+    prev_data_out_ready = data_out_ready_i;
+
+    @(posedge clk_i);
+
+    result_print(
+        ~prev_data_in_valid & prev_data_in_ready & prev_data_out_valid & prev_data_out_ready
+        , "Only Output side handshake during FIFO-full");
+
     $finish();
   end
 
