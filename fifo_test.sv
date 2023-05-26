@@ -49,7 +49,7 @@ module fifo_test;
       .data_in_ready_o(data_in_ready_o),
       .data_out_o(data_out_o),
       .data_out_valid_o(data_out_valid_o),
-      .data_out_ready_i
+      .data_out_ready_i(data_out_ready_i)
   );
 
   //-Methods
