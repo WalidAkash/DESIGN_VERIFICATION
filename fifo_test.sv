@@ -15,8 +15,8 @@ module fifo_test;
 
   //-Static Clock
 
-  `CREATE_CLK(clk_i, 3, 7)
-  logic arst_n = 1;
+  `CREATE_CLK(clk_i, 1, 1)
+  //logic arst_n = 1;
 
   logic arst_ni;
 
@@ -237,17 +237,8 @@ module fifo_test;
         prev_data_in_valid & prev_data_in_ready & prev_data_out_valid & ~prev_data_out_ready,
         "Only INPUT side handshake during FIFO-empty");
 
-    data_queue.delete();
-    data_in_valid_i  <= 0;
-    data_out_ready_i <= 0;
-    err = 0;
-    inp_count = 0;
-    out_count = 0;
-
-    arst_ni <= 0;
-    @(posedge clk_i);
-    arst_ni <= 1;
-    @(posedge clk_i);
+    apply_reset();
+    start_clk_i();
 
     while (out_count < 100) begin
       data_in_i <= $urandom;
@@ -262,7 +253,7 @@ module fifo_test;
       data_out_ready_i <= $urandom_range(0, 1);
       @(posedge clk_i);
     end
-    data_out_ready_i <= 0;
+    //data_out_ready_i <= 0;
 
     result_print(err == 0, "Data First-In-First-Out Verified");
 
