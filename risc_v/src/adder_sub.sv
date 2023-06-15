@@ -1,4 +1,5 @@
 // Designer : Khadija Yeasmin Fariya
+//            Updated by Walid Akash
 // Company  : DSi
 // Module   : adder_sub
 
@@ -16,12 +17,22 @@ module adder_sub
   logic [DPW-1:0] res_temp;
 
   // 2's complement the result and the operand for SUB op
-  assign {res,neg_opr_b} = (opcode == SUB_OP) ? 
+  /* assign {res,neg_opr_b} = (opcode == SUB_OP) ? 
                            {((~res_temp) + 1),((~opr_b) + 1)} :{res_temp, opr_b};
 
 
   always_comb begin
     res_temp = opr_a + opr_b;
+  end
+ */
+
+
+  //Bug Fix
+  assign {res, neg_opr_b} = (opcode == SUB_OP) ? {res_temp, ((~opr_b) + 1)} : {res_temp, opr_b};
+
+
+  always_comb begin
+    res_temp = opr_a + neg_opr_b;
   end
 
 endmodule

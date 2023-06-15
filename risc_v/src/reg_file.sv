@@ -3,10 +3,10 @@
 // Module Name: reg_file.sv
 
 module reg_file #(
-    parameter ADW = 5,
-    parameter DPW = 32
+    parameter int ADW = 5,
+    parameter int DPW = 32
 ) (
-    input  logic           clk,     // clock
+    input  logic           clk_i,     // clock
     input  logic [ADW-1:0] addr_1,
     input  logic [ADW-1:0] addr_2,
     input  logic [ADW-1:0] addr_3,
@@ -16,9 +16,9 @@ module reg_file #(
     output logic [DPW-1:0] rd_2
 );
 
-  logic [DPW-1:0] regs[0:2**ADW-1];
+  logic [DPW-1:0] regs[0:((2**ADW)-1)];
 
-  always @(posedge clk) begin
+  always @(posedge clk_i) begin
     if (we) begin
       regs[addr_3] <= wd_3;
     end

@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+//`timescale 1ns / 1ps
 ;
 
 module tb_alu;
@@ -28,6 +28,7 @@ module tb_alu;
           i);
       std::randomize(opr_a, opr_b);
       std::randomize(op);
+      //op <= SUB_OP;
       $cast(a, opr_a);
       $cast(b, opr_b);
       if (op == AND_OP) begin
@@ -39,6 +40,8 @@ module tb_alu;
       end else if (op == SUB_OP) begin
         r = a - b;
         $display("op :: SUB");
+        $display("a = ", a);
+        $display("b = ", b);
       end else if (op == OR_OP) begin
         r = a | b;
         $display("op :: OR ");
