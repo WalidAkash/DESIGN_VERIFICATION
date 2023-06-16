@@ -15,12 +15,15 @@ FLIST += ../src/instr_dec.sv
 FLIST += ../src/alu_dec.sv
 FLIST += ../src/control_unit.sv
 FLIST += ../src/reg_file.sv
+FLIST += ../src/decode_stage.sv
 FLIST += tb_reg_file.sv
 FLIST += tb_alu.sv
 FLIST += tb_control_unit.sv
+FLIST += tb_decode_stage.sv
 
 
-TOP = tb_reg_file
+#// Change the TOP module name as per as the testbench module 
+TOP = tb_decode_stage
 
 CT += *.log
 CT += *.pb
