@@ -35,8 +35,6 @@ module tb_decode_stage;
   logic [4:0] RdE;
   logic [31:0] immextE;
 
-  tb_control_unit u_tb_control_unit();
-
   //-VARIABLES
 
   int error;
