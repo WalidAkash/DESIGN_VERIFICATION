@@ -6,7 +6,7 @@ module reg_file #(
     parameter int ADW = 5,
     parameter int DPW = 32
 ) (
-    input  logic           clk_i,     // clock
+    input  logic           clk,     // clock
     input  logic [ADW-1:0] addr_1,
     input  logic [ADW-1:0] addr_2,
     input  logic [ADW-1:0] addr_3,
@@ -18,7 +18,7 @@ module reg_file #(
 
   logic [DPW-1:0] regs[0:((2**ADW)-1)];
 
-  always @(posedge clk_i) begin
+  always @(posedge clk) begin
     if (we) begin
       regs[addr_3] <= wd_3;
     end
