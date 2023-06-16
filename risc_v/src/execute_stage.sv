@@ -54,6 +54,7 @@ module execute_stage
     memwriteM <= memwriteE;
     aluresultM <= aluresultE;
     Rd2M <= Rd2E;
+    RdM <= RdE;
   end
 
 endmodule

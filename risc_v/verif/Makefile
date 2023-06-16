@@ -7,6 +7,7 @@
 
 FLIST += ../include/rv32i_func_code.svh
 FLIST += ../include/rv32i_pkg.sv
+FLIST += ../src/mux2_1.sv
 FLIST += ../src/shift_stage.sv
 FLIST += ../src/shifter.sv
 FLIST += ../src/adder_sub.sv
@@ -16,14 +17,16 @@ FLIST += ../src/alu_dec.sv
 FLIST += ../src/control_unit.sv
 FLIST += ../src/reg_file.sv
 FLIST += ../src/decode_stage.sv
+FLIST += ../src/execute_stage.sv
 FLIST += tb_reg_file.sv
 FLIST += tb_alu.sv
 FLIST += tb_control_unit.sv
 FLIST += tb_decode_stage.sv
+FLIST += tb_execute_stage.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_decode_stage
+TOP = tb_execute_stage
 
 CT += *.log
 CT += *.pb
