@@ -16,7 +16,7 @@ module extend_unit (
     end else if (immsrc) begin  // S-type
       immext = {{20{instr[31]}}, instr[31:25], instr[11:7]};
     end else begin  // Undefined
-      immext = 32'bx;
+      immext = 32'hx;
     end
   end
 

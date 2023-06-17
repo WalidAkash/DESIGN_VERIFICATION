@@ -1,36 +1,23 @@
-// Description here
-// ### Author : name (email)
+// Designer : Walid Akash (walidakash070@gmail.com)
+// Company : DSi
 
 module tb_reg_file;
 
-  //`define ENABLE_DUMPFILE
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-IMPORTS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
   // bring in the testbench essentials functions and macros
   `include "../include/tb_ess.sv"
+  `include "../src/reg_file.sv"
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOCALPARAMS
   localparam int ADW = 5;
   localparam int DPW = 32;
 
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-TYPEDEFS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // generates static task start_clk_i with tHigh:3 tLow:7
-  `CREATE_CLK(clk_i, 3, 7)
+  `CREATE_CLK(clk, 2, 2)
+
   logic [ADW-1:0] addr_1;
   logic [ADW-1:0] addr_2;
   logic [ADW-1:0] addr_3;
@@ -41,87 +28,80 @@ module tb_reg_file;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-VARIABLES
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  logic [DPW-1:0] regs_mem[0:((2**ADW)-1)];
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-INTERFACES
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-CLASSES
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  /* assign regs[addr_1] = [DPW-1:0]regs_mem[0];
-  assign regs[addr_2] = [DPW-1:0]regs_mem[1];
-  assign regs[addr_3] = [DPW-1:0]regs_mem[2]; */
-
+  logic [DPW-1:0] read_1;
+  logic [DPW-1:0] read_2;
+  logic [DPW-1:0] read_3;
+  int             error;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+
   reg_file #(
-    .ADW(ADW),
-    .DPW(DPW)
-) dut (
-    .clk_i(clk_i),
-    .addr_1(addr_1),
-    .addr_2(addr_2),
-    .addr_3(addr_3),
-    .we(we),
-    .wd_3(wd_3),
-    .rd_1(rd_1),
-    .rd_2(rd_2)
-);
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-METHODS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+      .ADW(ADW),
+      .DPW(DPW)
+  ) u_reg_file (
+      .clk(clk),
+      .addr_1(addr_1),
+      .addr_2(addr_2),
+      .addr_3(addr_3),
+      .we(we),
+      .wd_3(wd_3),
+      .rd_1(rd_1),
+      .rd_2(rd_2)
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    start_clk_i();
-    @(posedge clk_i);
+    start_clk();
+    @(posedge clk);
 
+    for (int i = 0; i < 10; i++) begin
+      $display("Test- - - > %p", i);
+      addr_1 <= $urandom_range(0, 10);
+      addr_2 <= $urandom_range(11, 20);
+      addr_3 <= $urandom_range(21, 31);
+      we <= $urandom_range(0, 1);
 
-    /*
-    // Write data to addr_3
-    addr_3 = 2;
-    we = 1;
-    wd_3 = 32'h12345678;
-    #10;
-    we = 0;
+      @(posedge clk);
 
-    // Read data from addr_1 and addr_2
-    addr_1 = 0;
-    addr_2 = 1;
-    #10;
+      $display("addr_1 = ", addr_1);
+      $display("addr_2 = ", addr_2);
+      $display("addr_3 = ", addr_3);
 
-    // Verify results
-    if (rd_1 !== 32'h00000000) $error("Test failed: rd_1");
-    if (rd_2 !== 32'h00000000) $error("Test failed: rd_2");
+      // Write data to addr_3
+      if (we) begin
+        wd_3 <= $urandom_range(0, 32'h88888887);
+      end
 
-    addr_1 = 2;
-    addr_2 = 2;
-    #10;
+      @(posedge clk);
 
-    if (rd_1 !== 32'h12345678) $error("Test failed: rd_1");
-    if (rd_2 !== 32'h12345678) $error("Test failed: rd_2");*/
+      addr_1 <= addr_3;
+      addr_2 <= addr_3;
 
-    $display("Test passed");
-    #100;
+      repeat (2) @(posedge clk);
+
+      $display("addr_1_n = ", addr_1);
+      $display("addr_2_n = ", addr_2);
+      $display("addr_3_n = ", addr_3);
+
+      $display("rd_1 = ", rd_1);
+      $display("rd_2 = ", rd_2);
+      $display("wd_3 = ", wd_3);
+
+      if (we) begin
+        if ((rd_1 == wd_3) && (rd_2 == wd_3)) begin
+          error = error;
+        end else begin
+          error++;
+        end
+      end
+      $display("Error = ", error);
+    end
+
+    result_print(error == 0, "Reg file verified");
     $finish;
   end
 
