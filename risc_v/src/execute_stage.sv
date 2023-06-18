@@ -10,12 +10,12 @@ module execute_stage
     input logic regwriteE,
     input logic resultsrcE,
     input logic memwriteE,
-    input logic [DPW-1:0] aluresultE,
+    input alu_op_t alu_ctrlE,
+    input logic alusrcE,
+    input logic [DPW-1:0] srcA,
     input logic [DPW-1:0] Rd2E,
     input logic [4:0] RdE,
     input logic [DPW-1:0] immextE,
-    input logic alusrcE,
-    input alu_op_t alu_ctrlE,
 
     output logic regwriteM,
     output logic resultsrcM,
@@ -27,8 +27,8 @@ module execute_stage
 
   //-SIGNALS
 
-  logic [DPW-1:0] srcA;
   logic [DPW-1:0] srcB;
+  logic [DPW-1:0] aluresultE;
 
   //-INSTATIATIONS
 

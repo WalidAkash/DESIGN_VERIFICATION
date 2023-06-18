@@ -22,15 +22,6 @@ module top
 
   //-SIGNALS
 
-  logic resultsrcD;
-  logic memwriteD;
-  logic alusrcD;
-  logic immsrc;
-  logic regwriteD;
-  alu_op_t alu_ctrlD;
-  logic [DPW-1:0] rd_1;
-  logic [DPW-1:0] rd_2;
-  logic [DPW-1:0] immextD;
   logic resultsrcE;
   logic memwriteE;
   logic alusrcE;
@@ -68,12 +59,12 @@ module top
       .regwriteE(regwriteE),
       .resultsrcE(resultsrcE),
       .memwriteE(memwriteE),
-      .aluresultE(aluresultE),
+      .alu_ctrlE(alu_ctrlE),
+      .alusrcE(alusrcE),
+      .srcA(srcA),
       .Rd2E(Rd2E),
       .RdE(RdE),
       .immextE(immextE),
-      .alusrcE(alusrcE),
-      .alu_ctrlE(alu_ctrlE),
       .regwriteM(regwriteM),
       .resultsrcM(resultsrcM),
       .memwriteM(memwriteM),
@@ -81,5 +72,6 @@ module top
       .Rd2M(Rd2M),
       .RdM(RdM)
   );
+
 
 endmodule
