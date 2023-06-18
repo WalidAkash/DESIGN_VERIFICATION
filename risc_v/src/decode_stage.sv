@@ -7,18 +7,11 @@ module decode_stage
 #(
     parameter int ADW = 5
 ) (
+    // Input ports
     input logic clk,
+    input logic [DPW-1:0] instrD,
 
-    input logic    resultsrcD,
-    input logic    memwriteD,
-    input logic    alusrcD,
-    input logic    regwriteD,
-    input alu_op_t alu_ctrlD,
-    input logic [DPW-1:0] rd_1,
-    input logic [DPW-1:0] rd_2,
-    input logic [4:0] RdD,
-    input logic [31:0] immextD,
-
+    //Output ports
     output logic resultsrcE,
     output logic memwriteE,
     output logic alusrcE,
@@ -27,7 +20,7 @@ module decode_stage
     output logic [DPW-1:0] srcA,
     output logic [DPW-1:0] Rd2E,
     output logic [4:0] RdE,
-    output logic [31:0] immextE
+    output logic [DPW-1:0] immextE
 );
 
   //-SIGNALS
@@ -36,17 +29,39 @@ module decode_stage
   func_code_t            func_code;
   logic                  funct7b5;
   logic                  immsrcD;
-
-  logic                  clk_i;  // clock
+  logic                  resultsrcD;
+  logic                  memwriteD;
+  logic                  alusrcD;
+  logic                  regwriteD;
+  alu_op_t               alu_ctrlD;
   logic        [ADW-1:0] addr_1;
   logic        [ADW-1:0] addr_2;
   logic        [ADW-1:0] addr_3;
   logic                  we;  // write enable
   logic        [DPW-1:0] wd_3;  // write data
+  logic        [DPW-1:0] rd_1;
+  logic        [DPW-1:0] rd_2;
+  logic        [    4:0] RdD;
+  logic        [DPW-1:0] immextD;
 
 
-  //-INSTANTIATION
+  //-DUT INSTANTIATIONS
 
+  // Instruction assignment Unit DUT Instantiation
+  instr_assign_unit #(
+      .ADW(ADW)
+  ) u_instr_assign_unit (
+      .instrD(instrD),
+      .instr_type(instr_type),
+      .func_code(func_code),
+      .funct7b5(funct7b5),
+      .addr_1(addr_1),
+      .addr_2(addr_2),
+      .RdD(RdD),
+      .instr_ext(instr_ext)
+  );
+
+  // Control Unit DUT Instantiation
   control_unit u_control_unit (
       .instr_type(instr_type),
       .func_code (func_code),
@@ -59,6 +74,7 @@ module decode_stage
       .alu_ctrl  (alu_ctrlD)
   );
 
+  // Control Unit DUT Instantiation
   reg_file #(
       .ADW(ADW),
       .DPW(DPW)
@@ -72,6 +88,14 @@ module decode_stage
       .rd_1(rd_1),
       .rd_2(rd_2)
   );
+
+  // Extend Unit DUT Instantiation
+  extend_unit u_extend_unit (
+      .instr_ext(instr_ext),
+      .immsrcD  (immsrcD),
+      .immextD  (immextD)
+  );
+
 
   //-PROCEDURALS
 

@@ -2,21 +2,23 @@
 // Company : DSi
 // Description : This module shifts the instruction by an appropriate amount
 
-module extend_unit (
-    input logic [31:7] instr,
-    input logic immsrc,
-    output logic [31:0] immext
+module extend_unit
+  import rv32i_pkg::*;
+(
+    input logic [DPW-1:7] instr_ext,
+    input logic immsrcD,
+    output logic [DPW-1:0] immextD
 );
 
   //-PROCEDURALS
 
   always_comb begin : extend
-    if (!immsrc) begin  // R-type, I-type ALU, I-type Load
-      immext = {{20{instr[31]}}, instr[31:20]};
-    end else if (immsrc) begin  // S-type
-      immext = {{20{instr[31]}}, instr[31:25], instr[11:7]};
+    if (!immsrcD) begin  // R-type, I-type ALU, I-type Load
+      immextD = {{20{instr_ext[31]}}, instr_ext[31:20]};
+    end else if (immsrcD) begin  // S-type
+      immextD = {{20{instr_ext[31]}}, instr_ext[31:25], instr_ext[11:7]};
     end else begin  // Undefined
-      immext = 32'hx;
+      immextD = 32'hx;
     end
   end
 

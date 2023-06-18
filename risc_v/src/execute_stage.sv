@@ -13,6 +13,9 @@ module execute_stage
     input logic [DPW-1:0] aluresultE,
     input logic [DPW-1:0] Rd2E,
     input logic [4:0] RdE,
+    input logic [DPW-1:0] immextE,
+    input logic alusrcE,
+    input alu_op_t alu_ctrlE,
 
     output logic regwriteM,
     output logic resultsrcM,
@@ -26,9 +29,6 @@ module execute_stage
 
   logic [DPW-1:0] srcA;
   logic [DPW-1:0] srcB;
-  logic immextE;
-  logic alusrcE;
-  alu_op_t aluctrlE;
 
   //-INSTATIATIONS
 
@@ -42,7 +42,7 @@ module execute_stage
   alu u_alu (
       .opr_a (srcA),
       .opr_b (srcB),
-      .opcode(aluctrlE),
+      .opcode(alu_ctrlE),
       .res   (aluresultE)
   );
 
