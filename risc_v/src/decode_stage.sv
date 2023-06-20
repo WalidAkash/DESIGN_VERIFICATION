@@ -8,8 +8,11 @@ module decode_stage
     parameter int ADW = 5
 ) (
     // Input ports
-    input logic clk,
+    input logic           clk,
     input logic [DPW-1:0] instrD,
+    input logic [ADW-1:0] addr_3,
+    input logic [DPW-1:0] wd_3,
+    input logic           we,      // write enable
 
     //Output ports
     output logic resultsrcE,
@@ -36,12 +39,10 @@ module decode_stage
   alu_op_t               alu_ctrlD;
   logic        [ADW-1:0] addr_1;
   logic        [ADW-1:0] addr_2;
-  logic        [ADW-1:0] addr_3;
-  logic                  we;  // write enable
-  logic        [DPW-1:0] wd_3;  // write data
   logic        [DPW-1:0] rd_1;
   logic        [DPW-1:0] rd_2;
   logic        [    4:0] RdD;
+  logic        [DPW-1:7] instr_ext;
   logic        [DPW-1:0] immextD;
 
 
@@ -79,7 +80,7 @@ module decode_stage
       .ADW(ADW),
       .DPW(DPW)
   ) u_reg_file (
-      .clk(clk_i),
+      .clk(clk),
       .addr_1(addr_1),
       .addr_2(addr_2),
       .addr_3(addr_3),

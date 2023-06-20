@@ -8,8 +8,11 @@ module top
     parameter int ADW = 5
 ) (
     // Input Ports
-    input logic           clk,    // clock
+    input logic           clk,     // clock
     input logic [DPW-1:0] instrD,
+    input logic [ADW-1:0] addr_3,
+    input logic [DPW-1:0] wd_3,
+    input logic           we,      // write enable
 
     // Output ports
     output logic regwriteM,
@@ -41,6 +44,9 @@ module top
   ) u_decode_stage (
       .clk(clk),
       .instrD(instrD),
+      .addr_3(addr_3),
+      .wd_3(wd_3),
+      .we(we),
       .resultsrcE(resultsrcE),
       .memwriteE(memwriteE),
       .alusrcE(alusrcE),
@@ -51,6 +57,7 @@ module top
       .RdE(RdE),
       .immextE(immextE)
   );
+
 
 
   // Execute Stage DUT Instantiation

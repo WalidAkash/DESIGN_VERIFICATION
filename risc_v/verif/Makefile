@@ -26,6 +26,7 @@ FLIST += tb_alu.sv
 FLIST += tb_control_unit.sv
 FLIST += tb_decode_stage.sv
 FLIST += tb_execute_stage.sv
+FLIST += tb_instr_assign.sv
 FLIST += tb_top.sv
 
 
