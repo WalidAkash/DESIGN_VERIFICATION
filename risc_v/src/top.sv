@@ -10,9 +10,9 @@ module top
     // Input Ports
     input logic           clk,     // clock
     input logic [DPW-1:0] instrD,
-    input logic [ADW-1:0] addr_3,
-    input logic [DPW-1:0] wd_3,
-    input logic           we,      // write enable
+    input logic [ADW-1:0] addr_3,  // For test purpose only
+    input logic [DPW-1:0] wd_3,    // For test purpose only
+    input logic           we,      // For test purpose only
 
     // Output ports
     output logic regwriteM,
@@ -20,7 +20,10 @@ module top
     output logic memwriteM,
     output logic [DPW-1:0] aluresultM,
     output logic [DPW-1:0] Rd2M,
-    output logic [4:0] RdM
+    output logic [4:0] RdM,
+
+    output logic [DPW-1:0] srcA,  // For test purpose only
+    output logic [DPW-1:0] srcB   // For test purpose only
 );
 
   //-SIGNALS
@@ -30,7 +33,7 @@ module top
   logic alusrcE;
   logic regwriteE;
   alu_op_t alu_ctrlE;
-  logic [DPW-1:0] srcA;
+  //logic [DPW-1:0] srcA;   // For test purpose only
   logic [DPW-1:0] Rd2E;
   logic [4:0] RdE;
   logic [31:0] immextE;
@@ -77,8 +80,10 @@ module top
       .memwriteM(memwriteM),
       .aluresultM(aluresultM),
       .Rd2M(Rd2M),
-      .RdM(RdM)
+      .RdM(RdM),
+      .srcB(srcB)
   );
+
 
 
 endmodule

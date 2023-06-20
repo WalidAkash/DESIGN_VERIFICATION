@@ -22,12 +22,14 @@ module execute_stage
     output logic memwriteM,
     output logic [DPW-1:0] aluresultM,
     output logic [DPW-1:0] Rd2M,
-    output logic [4:0] RdM
+    output logic [4:0] RdM,
+
+    output logic [DPW-1:0] srcB  // For test purpose only
 );
 
   //-SIGNALS
 
-  logic [DPW-1:0] srcB;
+  //logic [DPW-1:0] srcB;
   logic [DPW-1:0] aluresultE;
 
   //-INSTATIATIONS

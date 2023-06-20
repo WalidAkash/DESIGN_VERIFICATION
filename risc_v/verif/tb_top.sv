@@ -33,7 +33,12 @@ module tb_top;
   logic [ADW-1:0] addr_2;
   logic [DPW-1:0] rd_1;
   logic [DPW-1:0] rd_2;
+  logic [DPW-1:0] srcA;
+  logic [DPW-1:0] srcB;
+  logic [DPW-1:0] a;
+  logic [DPW-1:0] b;
 
+  logic [DPW-1:0] r;  // store the test operation result
   int             error = 0;
 
   //-DUT INSTANTIATIONS
@@ -51,8 +56,11 @@ module tb_top;
       .memwriteM(memwriteM),
       .aluresultM(aluresultM),
       .Rd2M(Rd2M),
-      .RdM(RdM)
+      .RdM(RdM),
+      .srcA(srcA),
+      .srcB(srcB)
   );
+
 
 
 
@@ -94,13 +102,16 @@ module tb_top;
       instrD[24:20] <= addr_3;
       repeat (2) @(posedge clk);
 
+      a <= srcA;
+      b <= srcB;
+
       $display("Test - - - - > %p", i);
       $display("instr_type = ", instrD[6:0]);
       $display("func_code = ", instrD[14:12]);
       $display("funct7b5 = ", instrD[30]);
 
       case (instrD[6:0])  // Testing the instruction decoder
-        51: begin   // R-type
+        51: begin  // R-type
           if ((regwriteM == 1) && (resultsrcM == 0) && (memwriteM == 0)) begin
             error = error;
           end else begin
@@ -108,7 +119,7 @@ module tb_top;
           end
         end
 
-        3: begin    // I_type_LOAD
+        3: begin  // I_type_LOAD
           if ((regwriteM == 1) && (resultsrcM == 1) && (memwriteM == 0)) begin
             error = error;
           end else begin
@@ -116,7 +127,7 @@ module tb_top;
           end
         end
 
-        19: begin   // I-type_ALU
+        19: begin  // I-type_ALU
           if ((regwriteM == 1) && (resultsrcM == 0) && (memwriteM == 0)) begin
             error = error;
           end else begin
@@ -133,6 +144,41 @@ module tb_top;
         end
       endcase
 
+      case (instrD[14:12])
+        3'b100: begin  // XOR
+          r = a ^ b;
+          if (r != aluresultM) begin
+            error++;
+          end
+        end
+
+        3'b101: begin  // SRL_A
+          if (instrD[30]) begin  // SRA_OP
+            r = signed'(a) >>> b[4:0];
+            if (r != aluresultM) begin
+              error++;
+            end
+          end else begin  // SRL_OP
+            r = a >> b[4:0];
+            if (r != aluresultM) begin
+              error++;
+            end
+          end
+        end
+
+        3'b110: begin  // OR
+          r = a | b;
+          if (r != aluresultM) begin
+            error++;
+          end
+        end
+        default: begin  // AND
+          r = a & b;
+          if (r != aluresultM) begin
+            error++;
+          end
+        end
+      endcase
     end
 
     $display("instrD = ", instrD);
