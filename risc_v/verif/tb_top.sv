@@ -69,25 +69,25 @@ module tb_top;
   initial begin
     start_clk();
 
-    for (int i = 0; i < 1; i++) begin
-      std::randomize(
+    for (int i = 0; i < 3; i++) begin
+      std::randomize(  // Instr_type
           instrD[6:0]
       ) with {
         instrD[6:0] inside {3, 19, 35, 51};
       };
 
-      std::randomize(
+      std::randomize(  // funct7b4
           instrD[30]
       ) with {
         instrD[30] inside {0, 1};
       };
       #10;
 
-      instrD[14:12] <= $urandom_range(4, 7);
+      instrD[14:12] <= $urandom_range(4, 7);  // func_code
       instrD[19:15] <= $urandom_range(0, 10);  // addr_1
       instrD[24:20] <= $urandom_range(11, 20);  // addr_2
 
-      instrD[11:7] <= $urandom_range(0, 20);
+      instrD[11:7] <= $urandom_range(0, 20);  // RdD
       instrD[29:25] <= $urandom_range(0, 20);
       instrD[31] <= $urandom_range(0, 20);
 
@@ -104,12 +104,14 @@ module tb_top;
 
       a <= srcA;
       b <= srcB;
+      repeat (2) @(posedge clk);
 
       $display("Test - - - - > %p", i);
       $display("instr_type = ", instrD[6:0]);
       $display("func_code = ", instrD[14:12]);
       $display("funct7b5 = ", instrD[30]);
 
+      // Comnpare Instruction types with expected value
       case (instrD[6:0])  // Testing the instruction decoder
         51: begin  // R-type
           if ((regwriteM == 1) && (resultsrcM == 0) && (memwriteM == 0)) begin
@@ -144,6 +146,7 @@ module tb_top;
         end
       endcase
 
+      // Comnpare ALU operation's results with expected value
       case (instrD[14:12])
         3'b100: begin  // XOR
           r = a ^ b;
@@ -171,14 +174,27 @@ module tb_top;
           if (r != aluresultM) begin
             error++;
           end
+          $display("errorOR = ", error);
         end
         default: begin  // AND
           r = a & b;
           if (r != aluresultM) begin
             error++;
           end
+          $display("errorAND = ", error);
         end
       endcase
+
+      // Comnpare RdM with expected value
+      if (instrD[11:7] != RdM) begin
+        error++;
+      end
+
+      // Comnpare Rd2M with expected value
+      if (wd_3 != Rd2M) begin
+        error++;
+      end
+      $display("error = ", error);
     end
 
     $display("instrD = ", instrD);
@@ -187,7 +203,5 @@ module tb_top;
     result_print(error == 0, "Top module veridied!!");
     $finish;
   end
-
-
 
 endmodule
