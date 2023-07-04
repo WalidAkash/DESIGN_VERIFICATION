@@ -7,6 +7,7 @@
 
 FLIST += ../include/rv32i_func_code.svh
 FLIST += ../include/rv32i_pkg.sv
+FLIST += ../src/hazard_unit.sv
 FLIST += ../src/mux2_1.sv
 FLIST += ../src/instr_assign_unit.sv
 FLIST += ../src/shift_stage.sv
@@ -28,10 +29,11 @@ FLIST += tb_decode_stage.sv
 FLIST += tb_execute_stage.sv
 FLIST += tb_instr_assign.sv
 FLIST += tb_top.sv
+FLIST += tb_hazard_unit.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_top
+TOP = tb_hazard_unit
 
 CT += *.log
 CT += *.pb
@@ -43,7 +45,6 @@ CT += top.wdb
 run: clean
 	@xvlog -sv $(FLIST)
 	@xelab $(TOP) -s top
-	@xsim top -runall
-
+	@xsim top -runall						
 clean:
 	@rm -rf $(CT)
