@@ -13,6 +13,7 @@ module decode_stage
     input logic [ADW-1:0] addr_3,
     input logic [DPW-1:0] wd_3,
     input logic           we,      // write enable
+    input logic           flushE,
 
     //Output ports
     output logic resultsrcE,
@@ -101,14 +102,29 @@ module decode_stage
   //-PROCEDURALS
 
   always_ff @(posedge clk) begin
-    resultsrcE <= resultsrcD;
-    memwriteE <= memwriteD;
-    alusrcE <= alusrcD;
-    regwriteE <= regwriteD;
-    alu_ctrlE <= alu_ctrlD;
-    srcA <= rd_1;
-    Rd2E <= rd_2;
-    RdE <= RdD;
-    immextE <= immextD;
+    if(flushE)
+    begin
+        resultsrcE    <= 0;
+        memwriteE     <= 0;
+        alusrcE       <= 0;
+        regwriteE     <= 0;
+        alu_ctrlE     <= 0;
+        srcA          <= 0;
+        Rd2E          <= 0;
+        RdE           <= 0;
+        immextE       <= 0;
+    end
+    else
+    begin
+        resultsrcE    <= resultsrcD;
+        memwriteE     <= memwriteD;
+        alusrcE       <= alusrcD;
+        regwriteE     <= regwriteD;
+        alu_ctrlE     <= alu_ctrlD;
+        srcA          <= rd_1;
+        Rd2E          <= rd_2;
+        RdE           <= RdD;
+        immextE       <= immextD;
+    end
   end
 endmodule

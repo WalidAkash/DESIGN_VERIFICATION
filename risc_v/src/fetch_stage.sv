@@ -5,17 +5,19 @@
 module fetch_stage
 import rv32i_pkg::*;
 #(
-  parameter int DPW = 32
+    parameter int DPW = 32
 )
 (
-input logic clk,
-input logic [DPW-1:0] instr,
-
-output logic [DPW-1:0] instrD
+    input     logic           clk,
+    input     logic           stallD,
+    input     logic [DPW-1:0] instr,
+    output    logic [DPW-1:0] instrD
 );
 
-always_ff @(posedge clk) begin
-  instrD <= instr;
-end
+    always_ff @(posedge clk) 
+    begin
+        if(!stallD)
+            instrD <= instr;
+    end
  
 endmodule
