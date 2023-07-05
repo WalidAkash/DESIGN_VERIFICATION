@@ -4,7 +4,7 @@
 module alu_dec
   import rv32i_pkg::func_code_t;
   import rv32i_pkg::alu_op_t;
-  import rv32i_pkg::ADD_SUB;
+  import rv32i_pkg::ADD_SUB_BEQ;
   import rv32i_pkg::AND;
   import rv32i_pkg::OR;
   import rv32i_pkg::XOR;
@@ -17,6 +17,7 @@ module alu_dec
   import rv32i_pkg::SLL_OP;
   import rv32i_pkg::SRA_OP;
   import rv32i_pkg::SRL_OP;
+  import rv32i_pkg::BEQ_OP;
 (
     input  func_code_t       func_code,
     input  logic             funct7b5,
@@ -28,14 +29,15 @@ module alu_dec
   always_comb begin
     if (op == 2'b01) begin
       alu_ctrl = ADD_OP;
+    end else if (op == 2'b11) begin
+      alu_ctrl = BEQ_OP;
     end else begin
       case (func_code)
-        ADD_SUB: begin
-          if (funct7b5 && (op == 2'b00)) //check if it is R-type
-		                                   //I-type doesn't have sub
+        ADD_SUB_BEQ: begin
+          if (funct7b5 && (op == 2'b00)) //check if it is R-type because I-type doesn't have sub
 		    begin
             alu_ctrl = SUB_OP;
-          end else begin
+        end else begin
             alu_ctrl = ADD_OP;
           end
         end

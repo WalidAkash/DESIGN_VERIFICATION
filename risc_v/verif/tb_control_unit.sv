@@ -12,7 +12,8 @@ module tb_control_unit ();
   import rv32i_pkg::R_TYPE;
   import rv32i_pkg::I_TYPE_LOAD;
   import rv32i_pkg::I_TYPE_ALU;
-  import rv32i_pkg::ADD_SUB;
+  import rv32i_pkg::B_TYPE;
+  import rv32i_pkg::ADD_SUB_BEQ;
   import rv32i_pkg::AND;
   import rv32i_pkg::OR;
   import rv32i_pkg::XOR;
@@ -25,6 +26,7 @@ module tb_control_unit ();
   import rv32i_pkg::SLL_OP;
   import rv32i_pkg::SRA_OP;
   import rv32i_pkg::SRL_OP;
+  import rv32i_pkg::BEQ_OP;
 
   `include "../include/tb_ess.sv"
 
@@ -35,12 +37,13 @@ module tb_control_unit ();
   } req_t;
 
   typedef struct packed {
-    logic    resultsrc;
-    logic    memwrite;
-    logic    alusrc;
-    logic    immsrc;
-    logic    regwrite;
-    alu_op_t alu_ctrl;
+    logic          branch;
+    logic          resultsrc;
+    logic          memwrite;
+    logic          alusrc;
+    logic    [1:0] immsrc;
+    logic          regwrite;
+    alu_op_t       alu_ctrl;
   } rsp_t;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +55,7 @@ module tb_control_unit ();
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-VARIABLES
 
-  int error = 0;
+  int     error = 0;
   logic [1:0] op;
 
 
@@ -63,6 +66,7 @@ module tb_control_unit ();
       .instr_type(req.instr),
       .func_code (req.func),
       .funct7b5  (req.funct),
+      .branch    (rsp.branch),
       .resultsrc (rsp.resultsrc),
       .memwrite  (rsp.memwrite),
       .alusrc    (rsp.alusrc),
@@ -76,11 +80,11 @@ module tb_control_unit ();
 
   initial begin
 
-    for (int i = 0; i < 10; i++) begin
+    for (int i = 0; i < 50; i++) begin
       std::randomize(
           req.instr
       ) with {
-        req.instr inside {3, 19, 35, 51};
+        req.instr inside {3, 19, 35, 51, 99};
       };
       std::randomize(
           req.func
@@ -101,8 +105,8 @@ module tb_control_unit ();
 
       case (req.instr)  // Testing the instruction decoder
         R_TYPE: begin
-          if ((rsp.immsrc == 0) && (rsp.resultsrc == 0) && (rsp.memwrite == 0) && (rsp.alusrc == 0)
-          && (rsp.regwrite == 1)) begin
+          if ((rsp.immsrc == 2'b00) && (rsp.resultsrc == 0) && (rsp.memwrite == 0) && (rsp.alusrc == 0)
+          && (rsp.regwrite == 1) && (rsp.branch == 0)) begin
             error = error;
           end else begin
             error++;
@@ -111,8 +115,8 @@ module tb_control_unit ();
         end
 
         I_TYPE_LOAD: begin
-          if ((rsp.immsrc == 0) &&(rsp.resultsrc == 1) && (rsp.memwrite == 0) && (rsp.alusrc == 1)
-          && (rsp.regwrite == 1)) begin
+          if ((rsp.immsrc == 2'b00) &&(rsp.resultsrc == 1) && (rsp.memwrite == 0) && (rsp.alusrc == 1)
+          && (rsp.regwrite == 1) && (rsp.branch == 0)) begin
             error = error;
           end else begin
             error++;
@@ -121,8 +125,8 @@ module tb_control_unit ();
         end
 
         I_TYPE_ALU: begin
-          if ((rsp.immsrc == 0) &&(rsp.resultsrc == 0) && (rsp.memwrite == 0) && (rsp.alusrc == 1)
-          && (rsp.regwrite == 1)) begin
+          if ((rsp.immsrc == 2'b00) &&(rsp.resultsrc == 0) && (rsp.memwrite == 0) && (rsp.alusrc == 1)
+          && (rsp.regwrite == 1) && (rsp.branch == 0)) begin
             error = error;
           end else begin
             error++;
@@ -130,9 +134,25 @@ module tb_control_unit ();
           op = 2'b10;
         end
 
+        B_TYPE: begin
+          if ((rsp.immsrc == 2'b10) &&(rsp.resultsrc == 0) && (rsp.memwrite == 0) && (rsp.alusrc == 0)
+          && (rsp.regwrite == 0) && (rsp.branch == 1)) begin
+            error = error;
+          end else begin
+            error++;
+            $display("error B = %p", error);
+            $display("immsrc = %p", rsp.immsrc);
+            $display("resultsrc = %p", rsp.resultsrc);
+            $display("memwrite = %p", rsp.memwrite);
+            $display("alusrc = %p", rsp.alusrc);
+            $display("regwrite = %p", rsp.regwrite);
+          end
+          op = 2'b11;
+        end
+
         default: begin
-          if ((rsp.immsrc == 1) &&(rsp.resultsrc == 0) && (rsp.memwrite == 1) && (rsp.alusrc == 1)
-          && (rsp.regwrite == 0)) begin
+          if ((rsp.immsrc == 2'b01) &&(rsp.resultsrc == 0) && (rsp.memwrite == 1) && (rsp.alusrc == 1)
+          && (rsp.regwrite == 0) && (rsp.branch == 0)) begin
             error = error;
           end else begin
             error++;
@@ -145,10 +165,13 @@ module tb_control_unit ();
       // Testing ALU Decoder
       if ((op == 2'b01) && (rsp.alu_ctrl == ADD_OP)) begin
         error = error;
+      end else if ((op == 2'b11) && (rsp.alu_ctrl == BEQ_OP)) begin
+        error = error;
+        $display("error BEQ = %p", error);
       end else begin
         case (req.func)
-          ADD_SUB: begin
-            if (req.funct && (rsp.alu_ctrl = SUB_OP)) begin
+          ADD_SUB_BEQ: begin
+            if (req.funct && (rsp.alu_ctrl == SUB_OP)) begin
               error = error;
               $display("error SUB = %p", error);
             end else if (rsp.alu_ctrl != ADD_OP) begin
@@ -184,6 +207,7 @@ module tb_control_unit ();
               $display("error SLL = %p", error);
             end
           end
+
           default: begin
             if ((req.funct == 1'b1) && (rsp.alu_ctrl == SRA_OP)) begin
               error = error;

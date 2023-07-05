@@ -8,7 +8,8 @@ package rv32i_pkg;
     I_TYPE_LOAD = 7'b0000011,
     I_TYPE_ALU  = 7'b0010011,
     S_TYPE      = 7'b0100011,
-    R_TYPE      = 7'b0110011
+    R_TYPE      = 7'b0110011, 
+    B_TYPE      = 7'b1100011
   } instr_type_t;
 
   typedef enum logic [3:0] {
@@ -19,7 +20,8 @@ package rv32i_pkg;
     XOR_OP,
     SLL_OP,
     SRL_OP,
-    SRA_OP
+    SRA_OP,
+    BEQ_OP
   } alu_op_t;
 
 endpackage

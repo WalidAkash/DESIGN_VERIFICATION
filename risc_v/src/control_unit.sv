@@ -9,10 +9,11 @@ module control_unit
     input  instr_type_t instr_type,
     input  func_code_t  func_code,
     input  logic        funct7b5,
+    output logic        branch,
     output logic        resultsrc,
     output logic        memwrite,
     output logic        alusrc,
-    output logic        immsrc,
+    output logic  [1:0] immsrc,
     output logic        regwrite,
     output alu_op_t     alu_ctrl
 );
@@ -23,6 +24,7 @@ module control_unit
 
   instr_dec u_instr_dec (
       .instr_type(instr_type),
+      .branch    (branch),
       .resultsrc (resultsrc),
       .memwrite  (memwrite),
       .alusrc    (alusrc),

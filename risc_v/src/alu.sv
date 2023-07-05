@@ -10,11 +10,13 @@ module alu
   import rv32i_pkg::AND_OP;
   import rv32i_pkg::OR_OP;
   import rv32i_pkg::XOR_OP;
+  import rv32i_pkg::BEQ_OP;
 (
     input  logic    [DPW-1:0] opr_a,
     input  logic    [DPW-1:0] opr_b,
     input  alu_op_t           opcode,
-    output logic    [DPW-1:0] res
+    output logic    [DPW-1:0] res,
+    output logic              zero_flag
 );
 
   // Signals
@@ -43,7 +45,8 @@ module alu
       .opr_a,
       .opr_b,
       .opcode,
-      .res(adder_sub_res)
+      .res(adder_sub_res),
+      .zero_flag(zero_flag)
   );
 
   // res select mux
