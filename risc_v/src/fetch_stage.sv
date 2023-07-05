@@ -14,8 +14,10 @@ input logic [DPW-1:0] instr,
 output logic [DPW-1:0] instrD
 );
 
-always_ff @(posedge clk) begin
-  instrD <= instr;
+always_ff @(posedge clk) 
+begin
+    if(!stallD)
+        instrD <= instr;
 end
- 
+
 endmodule

@@ -11,29 +11,36 @@ import rv32i_pkg::*;
     input   logic [REG_WIDTH -1:0] Rs2D,
     input   logic [REG_WIDTH -1:0] RdE,
     input   logic [REG_WIDTH -1:0] RdM,
+    input   logic                  PCSrcE,
+    output  logic                  stallF,
+    output  logic                  flushF,
     output  logic                  stallD,
-    output  logic                  flushE       
+    output  logic                  flushD,
+    output  logic                  flushE 
+
 );
     logic [1:0]count=0;
     always_comb
     begin
         if(count != 0)
         begin
+            stallF =1;
             stallD =1;
             flushE =1;
         end
         else 
         begin
+            stallF =1;
             stallD =0;
             flushE =0;
         end
     end
-    
+
     always_ff@(posedge clk) 
     begin
         if(count >0)
             count <= count - 1;
-        else if(regwriteE != S_TYPE )
+        else if(regwriteE != S_TYPE | regwriteE != B_TYPE)
         begin
             if(Rs1D==RdE | Rs2D==RdE)  
     	    begin
@@ -46,6 +53,20 @@ import rv32i_pkg::*;
         end
     	else
     	    count=0;
+    end
+
+    always_ff@(posedge clk) 
+    begin
+        if(PCSrcE)
+        begin
+            flushF <= 1;
+            flushD <= 1;
+        end
+        else
+        begin
+            flushF <= 0;
+            flushD <= 0; 
+        end
     end
 
 endmodule
