@@ -63,23 +63,24 @@ module tb_top;
     .RdM  ( RdM)
   );
 
-
-
-
   //-PROCEDURALS
 
   initial begin
     start_clk();
 
-    for (int i = 0; i < 3; i++) begin
-      std::randomize(  // Instr_type
+    for (int i = 0; i < 50; i++) begin
+      std::randomize(
           instr[6:0]
       ) with {
-        instr[6:0] inside {3, 19, 35, 51};
+        instr[6:0] inside {3, 19, 35, 51, 99};
       };
-
-      std::randomize(  // funct7b4
-          instr[30]
+      std::randomize(
+        instr[14:12]
+      ) with {
+        instr[14:12] inside {0, 1, 4, 5, 6, 7};
+      };
+      std::randomize(
+        instr[30]
       ) with {
         instr[30] inside {0, 1};
       };
