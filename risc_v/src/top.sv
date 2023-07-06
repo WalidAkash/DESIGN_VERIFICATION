@@ -14,6 +14,11 @@ module top
     input  logic            stallD,
     input  logic            flushD,
 
+    // Only for test purpose
+    input  logic [ADW-1:0] addr_3,
+    input  logic           we,      // write enable
+    input  logic [DPW-1:0] wd_3,
+
     // Output Ports
     output logic            regwriteM,
     output logic            resultsrcM,

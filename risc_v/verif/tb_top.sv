@@ -6,26 +6,24 @@ module tb_top;
   import rv32i_pkg::*;
   `include "../include/tb_ess.sv"
 
-  //-LOCALPARAMS
-
-  localparam int ADW = 5;
-
   //-SIGNALS
 
   // generates static task start_clk_i with tHigh:3 tLow:7
   `CREATE_CLK(clk, 1, 1)
-
-  logic [DPW-1:0] instrD;
+  logic [DPW-1:0] instr;
+  logic [DPW-1:0] PCF;
+  logic           stallD;
+  logic           flushD;
   logic [ADW-1:0] addr_3;
-  logic [DPW-1:0] wd_3;
   logic           we;
-
+  logic [DPW-1:0] wd_3;
   logic           regwriteM;
   logic           resultsrcM;
   logic           memwriteM;
   logic [DPW-1:0] aluresultM;
   logic [DPW-1:0] Rd2M;
-  logic [    4:0] RdM;
+  logic     [4:0] RdM;
+  
 
   //-VARIABLES
 
@@ -43,22 +41,26 @@ module tb_top;
 
   //-DUT INSTANTIATIONS
 
-  top #(
-      .ADW(ADW)
-  ) u_top (
-      .clk(clk),
-      .instrD(instrD),
-      .addr_3(addr_3),
-      .wd_3(wd_3),
-      .we(we),
-      .regwriteM(regwriteM),
-      .resultsrcM(resultsrcM),
-      .memwriteM(memwriteM),
-      .aluresultM(aluresultM),
-      .Rd2M(Rd2M),
-      .RdM(RdM),
-      .srcA(srcA),
-      .srcB(srcB)
+  top 
+  #(
+    .ADW (
+        ADW )
+  )
+  top_dut (
+    .clk (clk ),
+    .instr (instr ),
+    .PCF (PCF ),
+    .stallD (stallD ),
+    .flushD (flushD ),
+    .addr_3 (addr_3 ),
+    .we (we ),
+    .wd_3 (wd_3 ),
+    .regwriteM (regwriteM ),
+    .resultsrcM (resultsrcM ),
+    .memwriteM (memwriteM ),
+    .aluresultM (aluresultM ),
+    .Rd2M (Rd2M ),
+    .RdM  ( RdM)
   );
 
 
@@ -71,25 +73,25 @@ module tb_top;
 
     for (int i = 0; i < 3; i++) begin
       std::randomize(  // Instr_type
-          instrD[6:0]
+          instr[6:0]
       ) with {
-        instrD[6:0] inside {3, 19, 35, 51};
+        instr[6:0] inside {3, 19, 35, 51};
       };
 
       std::randomize(  // funct7b4
-          instrD[30]
+          instr[30]
       ) with {
-        instrD[30] inside {0, 1};
+        instr[30] inside {0, 1};
       };
       #10;
 
-      instrD[14:12] <= $urandom_range(4, 7);  // func_code
-      instrD[19:15] <= $urandom_range(0, 10);  // addr_1
-      instrD[24:20] <= $urandom_range(11, 20);  // addr_2
+      instr[14:12] <= $urandom_range(4, 7);  // func_code
+      instr[19:15] <= $urandom_range(0, 10);  // addr_1
+      instr[24:20] <= $urandom_range(11, 20);  // addr_2
 
-      instrD[11:7] <= $urandom_range(0, 20);  // RdD
-      instrD[29:25] <= $urandom_range(0, 20);
-      instrD[31] <= $urandom_range(0, 20);
+      instr[11:7] <= $urandom_range(0, 20);  // RdD
+      instr[29:25] <= $urandom_range(0, 20);
+      instr[31] <= $urandom_range(0, 20);
 
       addr_3 <= $urandom_range(21, 31);
       we <= 1;
@@ -98,8 +100,8 @@ module tb_top;
       wd_3 <= $urandom_range(0, 32'h88888887);
       @(posedge clk);
 
-      instrD[19:15] <= addr_3;
-      instrD[24:20] <= addr_3;
+      instr[19:15] <= addr_3;
+      instr[24:20] <= addr_3;
       repeat (2) @(posedge clk);
 
       a <= srcA;
@@ -107,12 +109,12 @@ module tb_top;
       repeat (2) @(posedge clk);
 
       $display("Test - - - - > %p", i);
-      $display("instr_type = ", instrD[6:0]);
-      $display("func_code = ", instrD[14:12]);
-      $display("funct7b5 = ", instrD[30]);
+      $display("instr_type = ", instr[6:0]);
+      $display("func_code = ", instr[14:12]);
+      $display("funct7b5 = ", instr[30]);
 
       // Comnpare Instruction types with expected value
-      case (instrD[6:0])  // Testing the instruction decoder
+      case (instr[6:0])  // Testing the instruction decoder
         51: begin  // R-type
           if ((regwriteM == 1) && (resultsrcM == 0) && (memwriteM == 0)) begin
             error = error;
@@ -147,7 +149,7 @@ module tb_top;
       endcase
 
       // Comnpare ALU operation's results with expected value
-      case (instrD[14:12])
+      case (instr[14:12])
         3'b100: begin  // XOR
           r = a ^ b;
           if (r != aluresultM) begin
@@ -156,7 +158,7 @@ module tb_top;
         end
 
         3'b101: begin  // SRL_A
-          if (instrD[30]) begin  // SRA_OP
+          if (instr[30]) begin  // SRA_OP
             r = signed'(a) >>> b[4:0];
             if (r != aluresultM) begin
               error++;
@@ -186,7 +188,7 @@ module tb_top;
       endcase
 
       // Comnpare RdM with expected value
-      if (instrD[11:7] != RdM) begin
+      if (instr[11:7] != RdM) begin
         error++;
       end
 
@@ -197,7 +199,7 @@ module tb_top;
       $display("error = ", error);
     end
 
-    $display("instrD = ", instrD);
+    $display("instr = ", instr);
     #50;
 
     result_print(error == 0, "Top module veridied!!");
