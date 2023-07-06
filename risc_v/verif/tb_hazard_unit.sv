@@ -9,19 +9,27 @@ import rv32i_pkg::*;
     logic [REG_WIDTH -1 : 0 ] Rs2D;
     logic [REG_WIDTH -1 : 0 ] RdE;
     logic [REG_WIDTH -1 : 0 ] RdM;
+    logic                     PCSrcE;
+    logic                     stallF;
+    logic                     flushF;
     logic                     stallD;
+    logic                     flushD;
     logic                     flushE;
 
     hazard_unit
     u_hazard_unit(
         .clk          (clk),
-        .regwriteE   (regwriteE),
+        .regwriteE    (regwriteE),
         .Rs1D         (Rs1D),
         .Rs2D         (Rs2D),
         .RdE          (RdE),
         .RdM          (RdM),
-        .stallD       (stallD),
-        .flushE       (flushE)       
+        .PCSrcE       ( PCSrcE),
+        .stallF       ( stallF),
+        .flushF       ( flushF),
+        .stallD       ( stallD),
+        .flushD       ( flushD),
+        .flushE       ( flushE)      
     );
     task start_tclk ();
         fork
@@ -50,6 +58,7 @@ import rv32i_pkg::*;
         Rs1D       =5'd2;      
         Rs2D       =5'd3;
         RdE        =5'd2;
+        PCSrcE     =1;
         $monitor("stallD =%d and flushE =%d",stallD,flushE);
         repeat(4) @(posedge clk);
         
@@ -57,28 +66,33 @@ import rv32i_pkg::*;
         Rs1D       =5'd2;
         Rs2D       =5'd3;
         RdE        =5'd2;
+        PCSrcE     =0;
         repeat(4) @(posedge clk);
         
         regwriteE = S_TYPE;
         Rs1D       =5'd2;
         Rs2D       =5'd2;
         RdE        =5'd2;
+        PCSrcE     =1;
         repeat(4) @(posedge clk);
         
         regwriteE = I_TYPE_LOAD;
         Rs1D       =5'd5;
         Rs2D       =5'd3;
         RdM        =5'd5;
+        PCSrcE     =0;
         repeat(4) @(posedge clk);
         regwriteE = I_TYPE_LOAD;
         Rs1D       =5'd6;
         Rs2D       =5'd6;
         RdE        =5'd6;
+        PCSrcE     =1;
         repeat(4) @(posedge clk);
         regwriteE = I_TYPE_LOAD;
         Rs1D       =5'd7;
         Rs2D       =5'd7;
         RdM        =5'd7;
+        PCSrcE     =0;
 
         repeat(4) @(posedge clk);
         regwriteE = S_TYPE;

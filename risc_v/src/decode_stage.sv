@@ -13,6 +13,7 @@ module decode_stage
     input logic [ADW-1:0] addr_3,
     input logic [DPW-1:0] wd_3,
     input logic           we,      // write enable
+    input logic           flushE,
 
     //Output ports
     output logic resultsrcE,
@@ -107,7 +108,7 @@ module decode_stage
         memwriteE     <= 0;
         alusrcE       <= 0;
         regwriteE     <= 0;
-        alu_ctrlE     <= 0;
+        //alu_ctrlE     <= 0;
         srcA          <= 0;
         Rd2E          <= 0;
         RdE           <= 0;

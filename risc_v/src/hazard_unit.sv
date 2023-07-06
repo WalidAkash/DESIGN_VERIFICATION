@@ -30,7 +30,7 @@ import rv32i_pkg::*;
         end
         else 
         begin
-            stallF =1;
+            stallF =0;
             stallD =0;
             flushE =0;
         end
