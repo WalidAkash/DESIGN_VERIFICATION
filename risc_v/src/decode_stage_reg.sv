@@ -2,7 +2,7 @@
 // Company : DSi
 // Description : Decode stage pipeline register
 
-module decode_stage
+module decode_stage_reg
 import rv32i_pkg::*;
 #(
   parameter int DPW = 32
