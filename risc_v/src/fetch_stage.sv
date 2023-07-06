@@ -1,7 +1,7 @@
 // ### Author : Razu Ahamed(en.razu.ahamed@gmail.com)
 // ### Company: DSi
 
-module fetch_stage_reg
+module fetch_stage
 import rv32i_pkg::*;
 (
     input  logic           clk,

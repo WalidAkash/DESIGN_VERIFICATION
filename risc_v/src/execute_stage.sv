@@ -2,7 +2,7 @@
 // Company : DSi
 // Description : Execute stage pipeline register
 
-module execute_stage_reg
+module execute_stage
   import rv32i_pkg::*;
 #(
     parameter int ADW = 5
@@ -10,20 +10,24 @@ module execute_stage_reg
     // Input ports
     input logic           clk,
     input logic [DPW-1:0] instrD,
+    input logic [DPW-1:0] PCD,
+    input logic           flushE,   // From Hazard Unit
     input logic [ADW-1:0] addr_3,
     input logic [DPW-1:0] wd_3,
     input logic           we,      // write enable
 
     //Output ports
-    output logic resultsrcE,
-    output logic memwriteE,
-    output logic alusrcE,
-    output logic regwriteE,
-    output alu_op_t alu_ctrlE,
+    output logic           resultsrcE,
+    output logic           memwriteE,
+    output logic           branchE,
+    output logic           alusrcE,
+    output logic           regwriteE,
+    output alu_op_t        alu_ctrlE,
     output logic [DPW-1:0] srcA,
     output logic [DPW-1:0] Rd2E,
-    output logic [4:0] RdE,
-    output logic [DPW-1:0] immextE
+    output logic [4:0]     RdE,
+    output logic [DPW-1:0] immextE,
+    output logic [DPW-1:0] PCE
 );
 
   //-SIGNALS
@@ -31,9 +35,10 @@ module execute_stage_reg
   instr_type_t           instr_type;
   func_code_t            func_code;
   logic                  funct7b5;
-  logic                  immsrcD;
+  logic            [1:0] immsrcD;
   logic                  resultsrcD;
   logic                  memwriteD;
+  logic                  branchD;
   logic                  alusrcD;
   logic                  regwriteD;
   alu_op_t               alu_ctrlD;
@@ -52,14 +57,14 @@ module execute_stage_reg
   instr_assign_unit #(
       .ADW(ADW)
   ) u_instr_assign_unit (
-      .instrD(instrD),
-      .instr_type(instr_type),
-      .func_code(func_code),
-      .funct7b5(funct7b5),
-      .addr_1(addr_1),
-      .addr_2(addr_2),
-      .RdD(RdD),
-      .instr_ext(instr_ext)
+      .instrD     (instrD),
+      .instr_type (instr_type),
+      .func_code  (func_code),
+      .funct7b5   (funct7b5),
+      .addr_1     (addr_1),
+      .addr_2     (addr_2),
+      .RdD        (RdD),
+      .instr_ext  (instr_ext)
   );
 
   // Control Unit DUT Instantiation
@@ -67,6 +72,7 @@ module execute_stage_reg
       .instr_type(instr_type),
       .func_code (func_code),
       .funct7b5  (funct7b5),
+      .branch    (branchD),
       .resultsrc (resultsrcD),
       .memwrite  (memwriteD),
       .alusrc    (alusrcD),
@@ -80,14 +86,14 @@ module execute_stage_reg
       .ADW(ADW),
       .DPW(DPW)
   ) u_reg_file (
-      .clk(clk),
+      .clk   (clk),
       .addr_1(addr_1),
       .addr_2(addr_2),
       .addr_3(addr_3),
-      .we(we),
-      .wd_3(wd_3),
-      .rd_1(rd_1),
-      .rd_2(rd_2)
+      .we    (we),
+      .wd_3  (wd_3),
+      .rd_1  (rd_1),
+      .rd_2  (rd_2)
   );
 
   // Extend Unit DUT Instantiation
@@ -101,14 +107,30 @@ module execute_stage_reg
   //-PROCEDURALS
 
   always_ff @(posedge clk) begin
-    resultsrcE <= resultsrcD;
-    memwriteE <= memwriteD;
-    alusrcE <= alusrcD;
-    regwriteE <= regwriteD;
-    alu_ctrlE <= alu_ctrlD;
-    srcA <= rd_1;
-    Rd2E <= rd_2;
-    RdE <= RdD;
-    immextE <= immextD;
+    if (flushE) begin
+        regwriteE <= 0;
+        resultsrcE <= 0;
+        memwriteE <= 0;
+        branchE <= 0;
+        $cast(alu_ctrlE, 0);
+        alusrcE <= 0;
+        srcA <= 0;
+        Rd2E <= 0;
+        RdE <= 0;
+        immextE <= 0;
+        PCE <= 0;
+    end else begin
+        regwriteE <= regwriteD;
+        resultsrcE <= resultsrcD;
+        memwriteE <= memwriteD;
+        branchE <= branchD;
+        alu_ctrlE <= alu_ctrlD;
+        alusrcE <= alusrcD;
+        srcA <= rd_1;
+        Rd2E <= rd_2;
+        RdE <= RdD;
+        immextE <= immextD;
+        PCE <= PCD;
+    end
   end
 endmodule
