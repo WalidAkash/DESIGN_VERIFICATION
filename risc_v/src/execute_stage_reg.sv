@@ -1,8 +1,8 @@
 // Designer : Walid Akash
 // Company : DSi
-// Description : decode stage pipeline register
+// Description : Execute stage pipeline register
 
-module decode_stage
+module execute_stage_reg
   import rv32i_pkg::*;
 #(
     parameter int ADW = 5

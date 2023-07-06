@@ -3,6 +3,7 @@ package rv32i_pkg;
   `include "rv32i_func_code.svh"
 
   localparam DPW = 32;
+  localparam ADW = 5;
 
   typedef enum logic [6:0] {
     I_TYPE_LOAD = 7'b0000011,

@@ -1,8 +1,8 @@
 // Designer : Walid Akash
 // Company : DSi
-// Description : Execute stage pipeline register
+// Description : Memory stage pipeline register
 
-module execute_stage
+module memory_stage_reg
   import rv32i_pkg::*;
 (
     input logic clk,
