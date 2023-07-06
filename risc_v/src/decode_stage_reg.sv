@@ -1,4 +1,5 @@
 // Designer : Walid Akash
+//            Updated by Razu Ahmed
 // Company : DSi
 // Description : Decode stage pipeline register
 
@@ -10,7 +11,7 @@ import rv32i_pkg::*;
 (
 input logic            clk,
 input logic            stallD,
-input logic            FlashD,
+input logic            flushD,
 input logic  [DPW-1:0] instr,
 input logic  [DPW-1:0] PCF,
 
@@ -20,7 +21,7 @@ output logic [DPW-1:0] PCD
 
 always_ff @(posedge clk) 
 begin
-    if(FlashD)
+    if(flushD)
         instrD <= 0;
         PCD <= 0;
     if(!stallD)
