@@ -54,7 +54,7 @@ module top
 
     logic [DPW-1:0] immextD;
 
-    logic           flushE;
+    logic           flushE = 0;   // Fpr test purpose
 
     logic           resultsrcE;
     logic           memwriteE;
@@ -230,7 +230,7 @@ module top
     );
 
     // Hazard Unit DUT Instantiation
-    hazard_unit 
+  /*   hazard_unit 
     u_hazard_unit (
       .clk (clk ),
       .regwriteE (regwriteE ),
@@ -245,5 +245,5 @@ module top
       .flushD (flushD ),
       .flushE  ( flushE)
     );  
-
+ */
 endmodule
