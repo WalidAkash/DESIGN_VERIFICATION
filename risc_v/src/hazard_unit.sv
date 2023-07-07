@@ -6,7 +6,7 @@ import rv32i_pkg::*;
     parameter REG_WIDTH=5
 )(
     input   bit                    clk,
-    input   instr_type_t           regwriteE,
+    input   logic           regwriteE,
     input   logic [REG_WIDTH -1:0] Rs1D,
     input   logic [REG_WIDTH -1:0] Rs2D,
     input   logic [REG_WIDTH -1:0] RdE,
@@ -40,7 +40,7 @@ import rv32i_pkg::*;
     begin
         if(count >0)
             count <= count - 1;
-        else if(regwriteE != S_TYPE | regwriteE != B_TYPE)
+        else if(regwriteE != 0)
         begin
             if(Rs1D==RdE | Rs2D==RdE)  
     	    begin

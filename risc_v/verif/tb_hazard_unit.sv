@@ -4,7 +4,7 @@ module tb_hazard_unit;
 import rv32i_pkg::*;
     parameter                 REG_WIDTH=5;
     bit                       clk;
-    instr_type_t              regwriteE;
+    logic              regwriteE;
     logic [REG_WIDTH -1 : 0 ] Rs1D;
     logic [REG_WIDTH -1 : 0 ] Rs2D;
     logic [REG_WIDTH -1 : 0 ] RdE;
@@ -54,7 +54,7 @@ import rv32i_pkg::*;
     begin
         start_tclk ();
         repeat(1) @(posedge clk);
-        regwriteE = S_TYPE;
+        regwriteE = 0;
         Rs1D       =5'd2;      
         Rs2D       =5'd3;
         RdE        =5'd2;
@@ -62,40 +62,40 @@ import rv32i_pkg::*;
         $monitor("stallD =%d and flushE =%d",stallD,flushE);
         repeat(4) @(posedge clk);
         
-        regwriteE = I_TYPE_LOAD;
+        regwriteE = 1;
         Rs1D       =5'd2;
         Rs2D       =5'd3;
         RdE        =5'd2;
         PCSrcE     =0;
         repeat(4) @(posedge clk);
         
-        regwriteE = S_TYPE;
+        regwriteE = 0;
         Rs1D       =5'd2;
         Rs2D       =5'd2;
         RdE        =5'd2;
         PCSrcE     =1;
         repeat(4) @(posedge clk);
         
-        regwriteE = I_TYPE_LOAD;
+        regwriteE = 1;
         Rs1D       =5'd5;
         Rs2D       =5'd3;
         RdM        =5'd5;
         PCSrcE     =0;
         repeat(4) @(posedge clk);
-        regwriteE = B_TYPE;
+        regwriteE = 0;
         Rs1D       =5'd6;
         Rs2D       =5'd6;
         RdE        =5'd6;
         PCSrcE     =1;
         repeat(4) @(posedge clk);
-        regwriteE = I_TYPE_LOAD;
+        regwriteE = 1;
         Rs1D       =5'd7;
         Rs2D       =5'd7;
         RdM        =5'd7;
         PCSrcE     =0;
 
         repeat(4) @(posedge clk);
-        regwriteE = S_TYPE;
+        regwriteE = 0;
         repeat(20) @(posedge clk);
         $finish;
 
