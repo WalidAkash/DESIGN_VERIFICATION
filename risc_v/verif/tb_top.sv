@@ -14,25 +14,28 @@ module tb_top;
   logic [DPW-1:0] PCF;
   logic           stallD = 0;
   logic           flushD = 0;
+
+  // For test purpose only
   logic [ADW-1:0] addr_3;
   logic           we;
   logic [DPW-1:0] wd_3;
+
   logic           regwriteM;
   logic           resultsrcM;
   logic           memwriteM;
   logic [DPW-1:0] aluresultM;
   logic [DPW-1:0] Rd2M;
   logic     [4:0] RdM;
+
+  // For test purpose only
+  logic [DPW-1:0] srcA;
+  logic [DPW-1:0] srcB;
   
 
   //-VARIABLES
 
   logic [ADW-1:0] addr_1;
   logic [ADW-1:0] addr_2;
-  logic [DPW-1:0] rd_1;
-  logic [DPW-1:0] rd_2;
-  logic [DPW-1:0] srcA;
-  logic [DPW-1:0] srcB;
   logic [DPW-1:0] a;
   logic [DPW-1:0] b;
 
@@ -60,7 +63,9 @@ module tb_top;
     .memwriteM (memwriteM ),
     .aluresultM (aluresultM ),
     .Rd2M (Rd2M ),
-    .RdM  ( RdM)
+    .RdM  ( RdM),
+    .srcA (srcA),
+    .srcB (srcB)
   );
 
   //-PROCEDURALS
@@ -68,16 +73,11 @@ module tb_top;
   initial begin
     start_clk();
 
-    for (int i = 0; i < 5; i++) begin
+    for (int i = 0; i < 10; i++) begin
       std::randomize(
           instr[6:0]
       ) with {
         instr[6:0] inside {3, 19, 35, 51, 99};
-      };
-      std::randomize(
-        instr[14:12]
-      ) with {
-        instr[14:12] inside {0, 1, 4, 5, 6, 7};
       };
       std::randomize(
         instr[30]
@@ -86,7 +86,8 @@ module tb_top;
       };
       #10;
 
-      instr[14:12] <= $urandom_range(4, 7);  // func_code
+      instr[14:12] <= $urandom_range(4, 7);  // func_code for XOR, SRL_A, OR and AND operation
+      //instr[14:12] <= $urandom_range(0,1);    // func_code for ADD_SUB_BEQ and SLL operation
       instr[19:15] <= $urandom_range(0, 10);  // addr_1
       instr[24:20] <= $urandom_range(11, 20);  // addr_2
 
@@ -109,7 +110,7 @@ module tb_top;
       b <= srcB;
       repeat (2) @(posedge clk);
 
-      $display("Test - - - - > %p", i);
+      $display("Test - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - > %p", i);
       $display("instr_type = ", instr[6:0]);
       $display("func_code = ", instr[14:12]);
       $display("funct7b5 = ", instr[30]);

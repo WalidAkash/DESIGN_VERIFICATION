@@ -25,7 +25,9 @@ module top
     output logic            memwriteM,
     output logic  [DPW-1:0] aluresultM,
     output logic  [DPW-1:0] Rd2M,
-    output logic      [4:0] RdM
+    output logic      [4:0] RdM,
+    output logic  [DPW-1:0] srcA,   // For test purpose only
+    output logic  [DPW-1:0] srcB    // For test purpose only
 );
 
   //-SIGNALS
@@ -54,7 +56,7 @@ module top
 
     logic [DPW-1:0] immextD;
 
-    logic           flushE = 0;   // Fpr test purpose
+    logic           flushE = 0;   // For test purpose
 
     logic           resultsrcE;
     logic           memwriteE;
@@ -62,12 +64,12 @@ module top
     logic           alusrcE;
     logic           regwriteE;
     alu_op_t        alu_ctrlE;
-    logic [DPW-1:0] srcA;
+    //logic [DPW-1:0] srcA;
     logic [DPW-1:0] Rd2E;
     logic [ADW-1:0] RdE;
     logic [DPW-1:0] immextE;
     logic [DPW-1:0] PCE;
-    logic [DPW-1:0] srcB;
+    //logic [DPW-1:0] srcB;
     logic [DPW-1:0] aluresultE;
 
     logic [DPW-1:0] PCNext;
