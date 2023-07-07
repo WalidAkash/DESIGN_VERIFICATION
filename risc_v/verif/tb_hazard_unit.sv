@@ -82,7 +82,7 @@ import rv32i_pkg::*;
         RdM        =5'd5;
         PCSrcE     =0;
         repeat(4) @(posedge clk);
-        regwriteE = I_TYPE_LOAD;
+        regwriteE = B_TYPE;
         Rs1D       =5'd6;
         Rs2D       =5'd6;
         RdE        =5'd6;
