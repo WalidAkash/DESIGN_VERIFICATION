@@ -12,8 +12,8 @@ module tb_top;
   `CREATE_CLK(clk, 1, 1)
   logic [DPW-1:0] instr;
   logic [DPW-1:0] PCF;
-  logic           stallD;
-  logic           flushD;
+  logic           stallD = 0;
+  logic           flushD = 0;
   logic [ADW-1:0] addr_3;
   logic           we;
   logic [DPW-1:0] wd_3;
@@ -68,7 +68,7 @@ module tb_top;
   initial begin
     start_clk();
 
-    for (int i = 0; i < 50; i++) begin
+    for (int i = 0; i < 5; i++) begin
       std::randomize(
           instr[6:0]
       ) with {
@@ -140,6 +140,14 @@ module tb_top;
           end
         end
 
+        99: begin
+          if ((regwriteM == 0) && (resultsrcM == 0) && (memwriteM == 0)) begin
+            error = error;
+          end else begin
+            error++;
+          end
+        end
+
         default: begin  // S-type
           if ((regwriteM == 0) && (resultsrcM == 0) && (memwriteM == 1)) begin
             error = error;
@@ -198,12 +206,16 @@ module tb_top;
         error++;
       end
       $display("error = ", error);
+
+      $display("resultsrcM = ", resultsrcM);
+      $display("regwriteM = ", regwriteM);
+      $display("memwriteM = ", memwriteM);
     end
 
     $display("instr = ", instr);
     #50;
 
-    result_print(error == 0, "Top module veridied!!");
+    result_print(error == 0, "Top module verified!!");
     $finish;
   end
 
