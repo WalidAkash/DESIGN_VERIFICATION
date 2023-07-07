@@ -206,7 +206,8 @@ module top
       .immextE   (immextE ),
       .branchE   (branchE ),
       .zero_flag (zero_flag ),
-      .PCNext    ( PCNext)
+      .PCNext    ( PCNext),
+      .PCSrcE    (PCSrcE)
     );
   
   
@@ -227,5 +228,22 @@ module top
       .Rd2M (Rd2M ),
       .RdM  ( RdM)
     );
+
+    // Hazard Unit DUT Instantiation
+    hazard_unit 
+    u_hazard_unit (
+      .clk (clk ),
+      .regwriteE (regwriteE ),
+      .Rs1D (addr_1 ),
+      .Rs2D (addr_2 ),
+      .RdE (RdE ),
+      .RdM (RdM ),
+      .PCSrcE (PCSrcE ),
+      .stallF (stallF ),
+      .flushF (flushF ),
+      .stallD (stallD ),
+      .flushD (flushD ),
+      .flushE  ( flushE)
+    );  
 
 endmodule

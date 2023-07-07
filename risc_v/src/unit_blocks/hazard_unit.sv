@@ -4,11 +4,11 @@ module hazard_unit
 import rv32i_pkg::*;
 (
     input   bit                    clk,
-    input   instr_type_t           regwriteE,
-    input   logic [ADW -1:0] Rs1D,
-    input   logic [ADW -1:0] Rs2D,
-    input   logic [ADW -1:0] RdE,
-    input   logic [ADW -1:0] RdM,
+    input   logic                  regwriteE,
+    input   logic       [ADW -1:0] Rs1D,
+    input   logic       [ADW -1:0] Rs2D,
+    input   logic       [ADW -1:0] RdE,
+    input   logic       [ADW -1:0] RdM,
     input   logic                  PCSrcE,
     output  logic                  stallF,
     output  logic                  flushF,
@@ -38,7 +38,7 @@ import rv32i_pkg::*;
     begin
         if(count >0)
             count <= count - 1;
-        else if(regwriteE != S_TYPE | regwriteE != B_TYPE)
+        else if(regwriteE != 1'b0)
         begin
             if(Rs1D==RdE | Rs2D==RdE)  
     	    begin

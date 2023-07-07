@@ -9,12 +9,12 @@ module branch_unit
     input logic             branchE,
     input logic             zero_flag,
 
-    output logic [DPW-1:0]  PCNext
+    output logic [DPW-1:0]  PCNext,
+    output logic            PCSrcE
 );
 
   //-SIGNALS
 
-  logic           PCSrcE;
   logic [DPW-1:0] PCPlus4;
   logic [DPW-1:0] PCTarget;
   alu_op_t        opcode = ADD_OP;
