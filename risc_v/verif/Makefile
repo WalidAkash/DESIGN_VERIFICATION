@@ -21,12 +21,13 @@ FLIST += ../src/unit_blocks/instr_dec.sv
 FLIST += ../src/unit_blocks/alu_dec.sv
 FLIST += ../src/unit_blocks/control_unit.sv
 FLIST += ../src/unit_blocks/extend_unit.sv
-#FLIST += ../src/unit_blocks/reg_file.sv
+FLIST += ../src/unit_blocks/reg_file.sv
 FLIST += ../src/unit_blocks/hazard_unit.sv
 FLIST += ../src/fetch_stage_reg.sv
 FLIST += ../src/decode_stage_reg.sv
 FLIST += ../src/execute_stage_reg.sv
 FLIST += ../src/memory_stage_reg.sv
+FLIST += ../src/writeback_stage_reg.sv
 FLIST += ../src/top.sv
 #FLIST += tb_reg_file.sv
 FLIST += tb_i_cache.sv
@@ -39,7 +40,7 @@ FLIST += tb_top.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_i_cache
+TOP = tb_top
 
 CT += *.log
 CT += *.pb

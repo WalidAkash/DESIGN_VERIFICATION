@@ -1,0 +1,640 @@
+$date
+   Mon Jul 10 17:04:25 2023
+$end
+$version
+  2022.2
+$end
+$timescale
+  1ps
+$end
+$scope module tb_top $end
+$var reg 1 ! clk $end
+$var reg 1 " flushF $end
+$var reg 1 # stallF $end
+$var reg 32 $ PCNext [31:0] $end
+$var reg 32 % PCF [31:0] $end
+$var reg 32 & instr [31:0] $end
+$var reg 32 ' aluresultM [31:0] $end
+$var reg 32 ( Rd2M [31:0] $end
+$var reg 1 ) memwriteM $end
+$var reg 32 * rd [31:0] $end
+$scope module u_top $end
+$var wire 1 + clk $end
+$var wire 1 , flushF $end
+$var wire 1 - stallF $end
+$var wire 32 . PCNext [31:0] $end
+$var reg 32 % PCF [31:0] $end
+$var reg 32 & instr [31:0] $end
+$var reg 32 ' aluresultM [31:0] $end
+$var reg 32 ( Rd2M [31:0] $end
+$var reg 1 ) memwriteM $end
+$var reg 32 * rd [31:0] $end
+$var reg 32 / instrD [31:0] $end
+$var reg 32 0 PCD [31:0] $end
+$var reg 7 1 instr_type $end
+$var reg 3 2 func_code $end
+$var reg 1 3 funct7b5 $end
+$var reg 5 4 addr_1 [4:0] $end
+$var reg 5 5 addr_2 [4:0] $end
+$var reg 5 6 RdD [4:0] $end
+$var reg 25 7 instr_ext [24:0] $end
+$var reg 1 8 branchD $end
+$var reg 1 9 resultsrcD $end
+$var reg 1 : memwriteD $end
+$var reg 1 ; alusrcD $end
+$var reg 2 < immsrcD [1:0] $end
+$var reg 1 = regwriteD $end
+$var reg 4 > alu_ctrlD $end
+$var reg 32 ? rd_1 [31:0] $end
+$var reg 32 @ rd_2 [31:0] $end
+$var reg 32 A immextD [31:0] $end
+$var reg 1 B resultsrcE $end
+$var reg 1 C memwriteE $end
+$var reg 1 D branchE $end
+$var reg 1 E alusrcE $end
+$var reg 1 F regwriteE $end
+$var reg 4 G alu_ctrlE $end
+$var reg 32 H srcA [31:0] $end
+$var reg 32 I Rd2E [31:0] $end
+$var reg 5 J RdE [4:0] $end
+$var reg 32 K immextE [31:0] $end
+$var reg 32 L PCE [31:0] $end
+$var reg 32 M srcB [31:0] $end
+$var reg 32 N aluresultE [31:0] $end
+$var reg 1 O regwriteM $end
+$var reg 1 P resultsrcM $end
+$var reg 1 Q regwriteW $end
+$var reg 1 R resultsrcW $end
+$var reg 32 S resultW [31:0] $end
+$var reg 5 T RdW [4:0] $end
+$var wire 1 U zero_flag $end
+$var wire 1 V PCSrcE $end
+$var wire 1 W RdM $end
+$scope module u_fetch_stage_reg $end
+$var wire 1 + clk $end
+$var wire 1 X flushF $end
+$var wire 1 Y stallF $end
+$var wire 32 . PCNext [31:0] $end
+$var reg 32 % PCF [31:0] $end
+$upscope $end
+$scope module i_cache_dut $end
+$var wire 32 % PCF [31:0] $end
+$var reg 32 & instr [31:0] $end
+$scope begin memory $end
+$scope begin Block34_3 $end
+$var reg 32 Z i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module u_decode_stage_reg $end
+$var wire 1 + clk $end
+$var wire 1 [ stallD $end
+$var wire 1 \ flushD $end
+$var wire 32 & instr [31:0] $end
+$var wire 32 % PCF [31:0] $end
+$var reg 32 / instrD [31:0] $end
+$var reg 32 0 PCD [31:0] $end
+$upscope $end
+$scope module u_instr_assign_unit $end
+$var wire 32 ] instrD [31:0] $end
+$var reg 7 1 instr_type $end
+$var reg 3 2 func_code $end
+$var reg 1 3 funct7b5 $end
+$var reg 5 4 addr_1 [4:0] $end
+$var reg 5 5 addr_2 [4:0] $end
+$var reg 5 6 RdD [4:0] $end
+$var reg 25 7 instr_ext [24:0] $end
+$upscope $end
+$scope module u_control_unit $end
+$var wire 7 ^ instr_type $end
+$var wire 3 _ func_code $end
+$var wire 1 ` funct7b5 $end
+$var reg 1 8 branch $end
+$var reg 1 9 resultsrc $end
+$var reg 1 : memwrite $end
+$var reg 1 ; alusrc $end
+$var reg 2 < immsrc [1:0] $end
+$var reg 1 = regwrite $end
+$var reg 4 > alu_ctrl $end
+$var reg 2 a op [1:0] $end
+$scope module u_instr_dec $end
+$var wire 7 ^ instr_type $end
+$var reg 1 8 branch $end
+$var reg 1 9 resultsrc $end
+$var reg 1 : memwrite $end
+$var reg 1 ; alusrc $end
+$var reg 2 < immsrc [1:0] $end
+$var reg 2 a op [1:0] $end
+$var reg 1 = regwrite $end
+$upscope $end
+$scope module u_alu_dec $end
+$var wire 3 _ func_code $end
+$var wire 1 ` funct7b5 $end
+$var wire 2 b op [1:0] $end
+$var reg 4 > alu_ctrl $end
+$upscope $end
+$upscope $end
+$scope module u_reg_file $end
+$var wire 1 + clk $end
+$var wire 5 c addr_1 [4:0] $end
+$var wire 5 d addr_2 [4:0] $end
+$var wire 5 e addr_3 [4:0] $end
+$var wire 1 f we_3 $end
+$var wire 32 g wd_3 [31:0] $end
+$var reg 32 ? rd_1 [31:0] $end
+$var reg 32 @ rd_2 [31:0] $end
+$upscope $end
+$scope module u_extend_unit $end
+$var wire 25 h instr_ext [24:0] $end
+$var wire 2 i immsrcD [1:0] $end
+$var reg 32 A immextD [31:0] $end
+$upscope $end
+$scope module u_execute_stage_reg $end
+$var wire 1 + clk $end
+$var wire 1 j resultsrcD $end
+$var wire 1 k memwriteD $end
+$var wire 1 l branchD $end
+$var wire 4 m alu_ctrlD $end
+$var wire 1 n alusrcD $end
+$var wire 1 o regwriteD $end
+$var wire 32 p rd_1 [31:0] $end
+$var wire 32 q rd_2 [31:0] $end
+$var wire 5 r RdD [4:0] $end
+$var wire 32 s immextD [31:0] $end
+$var wire 32 t PCD [31:0] $end
+$var wire 1 u flushE $end
+$var reg 1 B resultsrcE $end
+$var reg 1 C memwriteE $end
+$var reg 1 D branchE $end
+$var reg 1 E alusrcE $end
+$var reg 1 F regwriteE $end
+$var reg 4 G alu_ctrlE $end
+$var reg 32 H srcA [31:0] $end
+$var reg 32 I Rd2E [31:0] $end
+$var reg 5 J RdE [4:0] $end
+$var reg 32 K immextE [31:0] $end
+$var reg 32 L PCE [31:0] $end
+$upscope $end
+$scope module u_mux2_1 $end
+$var wire 32 v d0_i [31:0] $end
+$var wire 32 w d1_i [31:0] $end
+$var wire 1 x s_i $end
+$var reg 32 M y_o [31:0] $end
+$upscope $end
+$scope module u_alu $end
+$var wire 32 y opr_a [31:0] $end
+$var wire 32 z opr_b [31:0] $end
+$var wire 4 { opcode $end
+$var reg 32 N res [31:0] $end
+$var reg 1 | zero_flag $end
+$var reg 1 } is_left $end
+$var reg 1 ~ MSB_ext $end
+$var reg 32 !! opr_a_flip [31:0] $end
+$var reg 32 "! shift_res [31:0] $end
+$var reg 32 #! shift_number [31:0] $end
+$var reg 32 $! adder_sub_res [31:0] $end
+$scope module u_shifter $end
+$var wire 32 %! shift_number [31:0] $end
+$var wire 5 &! shift_amount [4:0] $end
+$var wire 1 '! is_left $end
+$var wire 1 (! MSB_ext $end
+$var wire 32 )! res [31:0] $end
+$var reg 32 *! res_temp [31:0] $end
+$var reg 32 +! res_flip [31:0] $end
+$scope module genblk1[0].genblk1.u_shift_stage $end
+$var wire 32 %! shift_number [31:0] $end
+$var wire 1 ,! shift_bit $end
+$var wire 1 (! MSB_ext $end
+$var reg 32 -! stage_res [127:96] $end
+$upscope $end
+$scope module genblk1[1].genblk1.u_shift_stage $end
+$var wire 32 .! shift_number [31:0] $end
+$var wire 1 /! shift_bit $end
+$var wire 1 (! MSB_ext $end
+$var reg 32 0! stage_res [95:64] $end
+$upscope $end
+$scope module genblk1[2].genblk1.u_shift_stage $end
+$var wire 32 1! shift_number [31:0] $end
+$var wire 1 2! shift_bit $end
+$var wire 1 (! MSB_ext $end
+$var reg 32 3! stage_res [63:32] $end
+$upscope $end
+$scope module genblk1[3].genblk1.u_shift_stage $end
+$var wire 32 4! shift_number [31:0] $end
+$var wire 1 5! shift_bit $end
+$var wire 1 (! MSB_ext $end
+$var reg 32 6! stage_res [31:0] $end
+$upscope $end
+$scope module last_shift_stage $end
+$var wire 32 7! shift_number [31:0] $end
+$var wire 1 8! shift_bit $end
+$var wire 1 (! MSB_ext $end
+$var reg 32 *! stage_res [31:0] $end
+$upscope $end
+$upscope $end
+$scope module u_adder_sub $end
+$var wire 32 y opr_a [31:0] $end
+$var wire 32 z opr_b [31:0] $end
+$var wire 4 { opcode $end
+$var reg 32 $! res [31:0] $end
+$var reg 1 | zero_flag $end
+$var reg 32 9! neg_opr_b [31:0] $end
+$var reg 32 :! res_temp [31:0] $end
+$upscope $end
+$upscope $end
+$scope module u_branch_unit $end
+$var wire 32 ;! PCF [31:0] $end
+$var wire 32 <! immextE [31:0] $end
+$var wire 1 =! branchE $end
+$var wire 1 U zero_flag $end
+$var reg 32 >! PCNext [31:0] $end
+$var reg 1 ?! PCSrcE $end
+$var reg 32 @! PCPlus4 [31:0] $end
+$var reg 32 A! PCTarget [31:0] $end
+$var reg 4 B! opcode $end
+$scope module u_adder_sub_1 $end
+$var wire 32 ;! opr_a [31:0] $end
+$var wire 32 C! opr_b [31:0] $end
+$var wire 4 D! opcode $end
+$var reg 32 @! res [31:0] $end
+$var reg 1 E! zero_flag $end
+$var reg 32 F! neg_opr_b [31:0] $end
+$var reg 32 G! res_temp [31:0] $end
+$upscope $end
+$scope module u_adder_sub_2 $end
+$var wire 32 ;! opr_a [31:0] $end
+$var wire 32 <! opr_b [31:0] $end
+$var wire 4 H! opcode $end
+$var reg 32 A! res [31:0] $end
+$var reg 1 I! zero_flag $end
+$var reg 32 J! neg_opr_b [31:0] $end
+$var reg 32 K! res_temp [31:0] $end
+$upscope $end
+$scope module u_mux2_1 $end
+$var wire 32 L! d0_i [31:0] $end
+$var wire 32 M! d1_i [31:0] $end
+$var wire 1 ?! s_i $end
+$var reg 32 >! y_o [31:0] $end
+$upscope $end
+$upscope $end
+$scope module u_memory_stage_reg $end
+$var wire 1 + clk $end
+$var wire 1 N! regwriteE $end
+$var wire 1 O! resultsrcE $end
+$var wire 1 P! memwriteE $end
+$var wire 32 Q! aluresultE [31:0] $end
+$var wire 32 R! Rd2E [31:0] $end
+$var wire 5 S! RdE [4:0] $end
+$var reg 1 O regwriteM $end
+$var reg 1 P resultsrcM $end
+$var reg 1 ) memwriteM $end
+$var reg 32 ' aluresultM [31:0] $end
+$var reg 32 ( Rd2M [31:0] $end
+$var reg 5 T! RdM [4:0] $end
+$upscope $end
+$scope module u_d_cacahe $end
+$var wire 1 + clk $end
+$var wire 32 ' addr [31:0] $end
+$var wire 32 ( wd [31:0] $end
+$var wire 32 U! we [31:0] $end
+$var reg 32 * rd [31:0] $end
+$scope begin Block19_23 $end
+$var reg 32 V! i [31:0] $end
+$upscope $end
+$scope begin Block24_24 $end
+$var reg 32 W! i [31:0] $end
+$upscope $end
+$upscope $end
+$scope module u_writeback_stage_reg $end
+$var wire 1 + clk $end
+$var wire 1 X! regwriteM $end
+$var wire 1 Y! resultsrcM $end
+$var wire 32 ' aluresultM [31:0] $end
+$var wire 32 * ReadDataM [31:0] $end
+$var wire 5 Z! RdM [4:0] $end
+$var reg 1 Q regwriteW $end
+$var reg 1 R resultsrcW $end
+$var reg 32 S resultW [31:0] $end
+$var reg 5 T RdW [4:0] $end
+$var reg 32 [! ReadDataW [31:0] $end
+$var reg 32 \! aluresultW [31:0] $end
+$scope module u_mux2_1 $end
+$var wire 32 ]! d0_i [31:0] $end
+$var wire 32 ^! d1_i [31:0] $end
+$var wire 1 R s_i $end
+$var reg 32 S y_o [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope task start_tclk $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1!
+bx !!
+x"
+bx "!
+x#
+bx #!
+bx $
+bx $!
+bx %
+bx %!
+bx &
+bx &!
+bx '
+0'!
+bx (
+0(!
+x)
+bx )!
+bx *
+bx *!
+1+
+bx +!
+x,
+x,!
+x-
+bx -!
+bx .
+bx .!
+bx /
+x/!
+bx 0
+bx 0!
+bx 1
+bx 1!
+bx 2
+x2!
+x3
+bx 3!
+bx 4
+bx 4!
+bx 5
+x5!
+bx 6
+bx 6!
+bx 7
+bx 7!
+08
+x8!
+09
+bx 9!
+1:
+bx :!
+1;
+bx ;!
+b1 <
+bx <!
+0=
+0=!
+b0 >
+bx >!
+bx ?
+0?!
+bx @
+bx @!
+bx A
+bx A!
+0B
+b0 B!
+1C
+b100 C!
+0D
+b0 D!
+1E
+0E!
+0F
+b100 F!
+b0 G
+bx G!
+bx H
+b0 H!
+bx I
+0I!
+bx J
+bx J!
+bx K
+bx K!
+bx L
+bx L!
+bx M
+bx M!
+bx N
+0N!
+xO
+0O!
+xP
+1P!
+xQ
+bx Q!
+xR
+bx R!
+bx S
+bx S!
+bzx T
+bx T!
+0U
+bzx U!
+0V
+b0 V!
+xW
+b100 W!
+0X
+xX!
+0Y
+xY!
+b100 Z
+bzx Z!
+0[
+bx [!
+0\
+bx \!
+bx ]
+bx ]!
+bx ^
+bx ^!
+bx _
+x`
+b1 a
+b1 b
+bx c
+bx d
+bzx e
+xf
+bx g
+bx h
+b1 i
+0j
+1k
+0l
+b0 m
+1n
+0o
+bx p
+bx q
+bx r
+bx s
+bx t
+0u
+bx v
+bx w
+1x
+bx y
+bx z
+b0 {
+0|
+0}
+0~
+$end
+#5000
+0!
+0+
+#10000
+1!
+bx %
+bx '
+bx (
+1)
+bx *
+1+
+bx /
+bx 0
+bx ?
+bx @
+0B
+1C
+0D
+1E
+0F
+b0 G
+bx H
+bx I
+bx J
+bx K
+bx L
+0O
+0P
+xQ
+xR
+bzx T
+bx T!
+bz1 U!
+b100 W!
+0X!
+0Y!
+bx [!
+bx \!
+bx t
+#15000
+0!
+0+
+#20000
+1!
+bx %
+bx '
+bx (
+1)
+1+
+bx /
+bx 0
+bx ?
+bx @
+0B
+1C
+0D
+1E
+0F
+b0 G
+bx H
+bx I
+bx J
+bx K
+bx L
+0O
+0P
+0Q
+0R
+bx S
+bzx T
+bx T!
+b100 V!
+bx [!
+bx \!
+0f
+bx t
+#25000
+0!
+0+
+#30000
+1!
+bx %
+bx '
+bx (
+1)
+1+
+bx /
+bx 0
+bx ?
+bx @
+0B
+1C
+0D
+1E
+0F
+b0 G
+bx H
+bx I
+bx J
+bx K
+bx L
+0O
+0P
+0Q
+0R
+bzx T
+bx T!
+b100 V!
+bx [!
+bx \!
+bx t
+#35000
+0!
+0+
+#40000
+1!
+bx %
+bx '
+bx (
+1)
+1+
+bx /
+bx 0
+bx ?
+bx @
+0B
+1C
+0D
+1E
+0F
+b0 G
+bx H
+bx I
+bx J
+bx K
+bx L
+0O
+0P
+0Q
+0R
+bzx T
+bx T!
+b100 V!
+bx [!
+bx \!
+bx t
+#45000
+0!
+0+

@@ -1,0 +1,47 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab tb_top -s top 
+Multi-threading is on. Using 6 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'flushF' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:111]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'stallF' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:112]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'stallD' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:138]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'flushD' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:139]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'flushE' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:223]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'RdM' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:282]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'we' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:294]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'RdM' [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/top.sv:305]
+WARNING: [VRFC 10-3645] port 'zero_flag' remains unconnected for this instance [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/unit_blocks/branch_unit.sv:28]
+WARNING: [VRFC 10-3645] port 'zero_flag' remains unconnected for this instance [/home/razu/all_task/computer Arch/RISCV_processor/DESIGN_VERIFICATION/risc_v/src/unit_blocks/branch_unit.sv:35]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.rv32i_pkg
+Compiling module work.fetch_stage_reg
+Compiling module work.i_cache
+Compiling module work.decode_stage_reg
+Compiling module work.instr_assign_unit
+Compiling module work.instr_dec
+Compiling module work.alu_dec
+Compiling module work.control_unit
+Compiling module work.reg_file
+Compiling module work.extend_unit
+Compiling module work.execute_stage_reg
+Compiling module work.mux2_1
+Compiling module work.shift_stage_default
+Compiling module work.shift_stage(stage_num=1)
+Compiling module work.shift_stage(stage_num=2)
+Compiling module work.shift_stage(stage_num=3)
+Compiling module work.shift_stage(stage_num=4)
+Compiling module work.shifter_default
+Compiling module work.adder_sub
+Compiling module work.alu
+Compiling module work.branch_unit
+Compiling module work.memory_stage_reg
+Compiling module work.d_cacahe
+Compiling module work.writeback_stage_reg
+Compiling module work.top
+Compiling module work.tb_top
+Built simulation snapshot top

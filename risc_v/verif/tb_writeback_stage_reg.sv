@@ -51,28 +51,7 @@ import rv32i_pkg::*;
   initial 
   begin
     start_tclk ();
-    @(negedge clk);
-    regwriteM =$urandom;
-    resultsrcM =$urandom;
-    aluresultM =$urandom;
-    ReadDataM =$urandom;
-    RdM =$urandom;
-    @(negedge clk);
-    regwriteM =$urandom;
-    resultsrcM =$urandom;
-    aluresultM =$urandom;
-    ReadDataM =$urandom;
-    RdM =0;
-    @(negedge clk);
-    resultsrcM =1;
-    aluresultM =5;
-    ReadDataM =2;
-    @(negedge clk);
-    @(negedge clk);
-    resultsrcM =0;
-    aluresultM =5;
-    ReadDataM =2;
-  
+
     repeat(5) @(negedge clk);
     $finish;
   end
