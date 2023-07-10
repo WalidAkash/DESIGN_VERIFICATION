@@ -8,73 +8,124 @@ module top
     parameter int ADW = 5
 ) (
     // Input Ports
-    input  logic            clk,     // clock
-    input  logic  [DPW-1:0] instr,
-    input  logic  [DPW-1:0] PCF,
-    input  logic            stallD,
-    input  logic            flushD,
-
-    // Only for test purpose
-    input  logic [ADW-1:0] addr_3,
-    input  logic           we,      // write enable
-    input  logic [DPW-1:0] wd_3,
+    input  logic           clk,
+    input  logic           flushF,
+    input  logic           stallF,
+    input  logic [DPW-1:0] PCNext,
 
     // Output Ports
-    output logic            regwriteM,
-    output logic            resultsrcM,
-    output logic            memwriteM,
-    output logic  [DPW-1:0] aluresultM,
-    output logic  [DPW-1:0] Rd2M,
-    output logic      [4:0] RdM,
-    output logic  [DPW-1:0] srcA,   // For test purpose only
-    output logic  [DPW-1:0] srcB    // For test purpose only
+    //-For test purpose ports
+    output logic [DPW-1:0] PCF,
+    output logic [DPW-1:0] instr,
+
+    output logic [DPW-1:0] aluresultM,
+    output logic [DPW-1:0] Rd2M,
+    output logic           memwriteM,
+    output logic [DPW-1:0] rd
+    
 );
 
+  ///////////////////////////////////////////////////////////////////////////  ///////////////////////
+  //-LOCALPARAMS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  localparam     int ElemWidth = 8;
+  localparam     int Depth = 120;
+
+  ///////////////////////////////////////////////////////////////////////////  ///////////////////////
   //-SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+    logic            stallD;
+    logic            flushD;
 
-    logic [DPW-1:0] instrD;
-    logic [DPW-1:0] PCD;
+    logic  [DPW-1:0] instrD;
+    logic  [DPW-1:0] PCD;
 
-    instr_type_t instr_type;
-    func_code_t func_code;
-    logic funct7b5;
-    logic [ADW-1:0] addr_1;
-    logic [ADW-1:0] addr_2;
-    logic [4:0] RdD;
-    logic [DPW-1:7] instr_ext;
+    instr_type_t     instr_type;
+    func_code_t      func_code;
+    logic            funct7b5;
+    logic  [ADW-1:0] addr_1;
+    logic  [ADW-1:0] addr_2;
+    logic      [4:0] RdD;
+    logic  [DPW-1:7] instr_ext;
 
-    logic           branchD;
-    logic           resultsrcD;
-    logic           memwriteD;
-    logic           alusrcD;
-    logic     [1:0] immsrcD;
-    logic           regwriteD;
-    alu_op_t        alu_ctrlD;
+    logic            branchD;
+    logic            resultsrcD;
+    logic            memwriteD;
+    logic            alusrcD;
+    logic      [1:0] immsrcD;
+    logic            regwriteD;
+    alu_op_t         alu_ctrlD;
 
-    logic [DPW-1:0] rd_1;
-    logic [DPW-1:0] rd_2;
+    logic  [DPW-1:0] rd_1;
+    logic  [DPW-1:0] rd_2;
+    /* logic  [ADW-1:0] addr_3;
+    logic            we_3;      // write enable
+    logic  [DPW-1:0] wd_3; */
 
-    logic [DPW-1:0] immextD;
+    logic  [DPW-1:0] immextD;
 
-    logic           flushE = 0;   // For test purpose
+    logic            flushE = 0;   // For test purpose
 
-    logic           resultsrcE;
-    logic           memwriteE;
-    logic           branchE;
-    logic           alusrcE;
-    logic           regwriteE;
-    alu_op_t        alu_ctrlE;
-    //logic [DPW-1:0] srcA;
-    logic [DPW-1:0] Rd2E;
-    logic [ADW-1:0] RdE;
-    logic [DPW-1:0] immextE;
-    logic [DPW-1:0] PCE;
-    //logic [DPW-1:0] srcB;
-    logic [DPW-1:0] aluresultE;
+    logic            resultsrcE;
+    logic            memwriteE;
+    logic            branchE;
+    logic            alusrcE;
+    logic            regwriteE;
+    alu_op_t         alu_ctrlE;
+    logic  [DPW-1:0] srcA;
+    logic  [DPW-1:0] Rd2E;
+    logic  [ADW-1:0] RdE;
+    logic  [DPW-1:0] immextE;
+    logic  [DPW-1:0] PCE;
+    logic  [DPW-1:0] srcB;
+    logic  [DPW-1:0] aluresultE;
 
-    logic [DPW-1:0] PCNext;
+    logic            regwriteM;
+    logic            resultsrcM;
 
+    /* logic            memwriteM;
+    logic  [DPW-1:0] aluresultM;
+    logic  [DPW-1:0] Rd2M;
+    logic      [4:0] Rd;
+
+    logic  [DPW-1:0] rd; */
+
+    logic            regwriteW;
+    logic            resultsrcW;
+    logic  [DPW-1:0] resultW;
+    logic      [4:0] RdW;
+  
+  
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   //-DUT INSTANTIATIONS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Fetch stage pipeline register
+
+  fetch_stage_reg 
+  u_fetch_stage_reg (
+    .clk (clk ),
+    .flushF (0 ),
+    .stallF (0 ),
+    .PCNext (PCNext ),
+    .PCF  ( PCF)
+  );
+
+  // I-cache 
+
+  i_cache #(
+    .ElemWidth(ElemWidth ),
+    .Depth (Depth )
+  )
+  i_cache_dut (
+    .PCF (PCF ),
+    .instr  ( instr)
+  );
+
+
 
   // Decode stage pipeline reg DUT Instantiation
     decode_stage_reg 
@@ -84,8 +135,8 @@ module top
     )
     u_decode_stage_reg (
     .clk (clk ),
-    .stallD (stallD ),
-    .flushD (flushD ),
+    .stallD (0 ),
+    .flushD (0 ),
     .instr (instr ),
     .PCF (PCF ),
     .instrD (instrD ),
@@ -135,9 +186,9 @@ module top
       .clk (clk ),
       .addr_1 (addr_1 ),
       .addr_2 (addr_2 ),
-      .addr_3 (addr_3 ),
-      .we (we ),
-      .wd_3 (wd_3 ),
+      .addr_3 (RdW ),
+      .we_3 (regwriteW ),
+      .wd_3 (resultW ),
       .rd_1 (rd_1 ),
       .rd_2  ( rd_2)
     );
@@ -169,7 +220,7 @@ module top
       .RdD (RdD ),
       .immextD (immextD ),
       .PCD (PCD ),
-      .flushE (flushE ),
+      .flushE (0 ),
       .resultsrcE (resultsrcE ),
       .memwriteE (memwriteE ),
       .branchE (branchE ),
@@ -230,6 +281,35 @@ module top
       .Rd2M (Rd2M ),
       .RdM  ( RdM)
     );
+
+    // D-cache 
+    d_cacahe #(
+      .ElemWidth(ElemWidth ),
+      .Depth (Depth )
+    )
+    u_d_cacahe (
+      .clk (clk ),
+      .addr (aluresultM ),
+      .wd (Rd2M ),
+      .we (memwriteM ),
+      .rd  ( rd)
+    );
+
+    writeback_stage_reg 
+    u_writeback_stage_reg (
+      .clk (clk ),
+      .regwriteM (regwriteM ),
+      .resultsrcM (resultsrcM ),
+      .aluresultM (aluresultM ),
+      .ReadDataM (rd ),
+      .RdM (RdM ),
+      .regwriteW (regwriteW ),
+      .resultsrcW (resultsrcW ),
+      .resultW (resultW ),
+      .RdW  ( RdW)
+    );
+  
+  
 
     // Hazard Unit DUT Instantiation
   /*   hazard_unit 

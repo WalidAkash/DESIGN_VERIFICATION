@@ -5,7 +5,7 @@ module tb_reg_file;
 
   // bring in the testbench essentials functions and macros
   `include "../include/tb_ess.sv"
-  `include "../src/reg_file.sv"
+  `include "../src/unit_blocks/reg_file.sv"
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOCALPARAMS
@@ -21,7 +21,7 @@ module tb_reg_file;
   logic [ADW-1:0] addr_1;
   logic [ADW-1:0] addr_2;
   logic [ADW-1:0] addr_3;
-  logic           we;
+  logic           we_3;
   logic [DPW-1:0] wd_3;
   logic [DPW-1:0] rd_1;
   logic [DPW-1:0] rd_2;
@@ -45,7 +45,7 @@ module tb_reg_file;
       .addr_1(addr_1),
       .addr_2(addr_2),
       .addr_3(addr_3),
-      .we(we),
+      .we_3(we_3),
       .wd_3(wd_3),
       .rd_1(rd_1),
       .rd_2(rd_2)
@@ -63,7 +63,7 @@ module tb_reg_file;
       addr_1 <= $urandom_range(0, 10);
       addr_2 <= $urandom_range(11, 20);
       addr_3 <= $urandom_range(21, 31);
-      we <= $urandom_range(0, 1);
+      we_3 <= $urandom_range(0, 1);
 
       @(posedge clk);
 
@@ -72,7 +72,7 @@ module tb_reg_file;
       $display("addr_3 = ", addr_3);
 
       // Write data to addr_3
-      if (we) begin
+      if (we_3) begin
         wd_3 <= $urandom_range(0, 32'h88888887);
       end
 
