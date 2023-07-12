@@ -3,7 +3,7 @@
 module tb_fetch_stage_reg;
 import rv32i_pkg::*;
   logic           clk    ;
-  logic           FlushF ;
+  logic           flushF ;
   logic           stallF ;
   logic [DPW-1:0] PCNext ;
   logic [DPW-1:0] PCF    ;
@@ -11,7 +11,7 @@ import rv32i_pkg::*;
   fetch_stage_reg 
   u_fetch_stage_reg (
     .clk    (clk ),
-    .FlushF (FlushF ),
+    .flushF (flushF ),
     .stallF (stallF ),
     .PCNext (PCNext ),
     .PCF    ( PCF)
@@ -40,27 +40,27 @@ import rv32i_pkg::*;
     start_tclk ();
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 0;
+    flushF <= 0;
     stallF <= 0;
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 0;
+    flushF <= 0;
     stallF <= 1;
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 1;
+    flushF <= 1;
     stallF <= 0;
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 1;
+    flushF <= 1;
     stallF <= 1;
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 0;
+    flushF <= 0;
     stallF <= 0;
     @(negedge clk);
     PCNext <= $urandom;
-    FlushF <= 1;
+    flushF <= 1;
     stallF <= 1;
     repeat(5) @(negedge clk);
     $finish;

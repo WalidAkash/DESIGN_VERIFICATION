@@ -33,7 +33,7 @@ module i_cache
   always_comb begin : memory
     for (int i = 0; i < 4 ; i++) begin
       instr[(8*(i+1)-1)-:8] = i_cache_mem[PCF+i]; 
-      $display("i_cache_mem[PCF+i] = %h", i_cache_mem[PCF+i]);
+      //$display("i_cache_mem[PCF+i] = %h", i_cache_mem[PCF+i]);
     end
   end
 endmodule

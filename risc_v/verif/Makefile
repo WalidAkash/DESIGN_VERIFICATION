@@ -36,11 +36,13 @@ FLIST += tb_control_unit.sv
 #FLIST += tb_decode_stage.sv
 #FLIST += tb_execute_stage.sv
 #FLIST += tb_instr_assign.sv
+FLIST += tb_fetch_stage_reg.sv
+FLIST += tb_d_cache.sv
 FLIST += tb_top.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_top
+TOP = tb_d_cache
 
 CT += *.log
 CT += *.pb
