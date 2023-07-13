@@ -42,7 +42,7 @@ FLIST += tb_top.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_d_cache
+TOP = tb_top
 
 CT += *.log
 CT += *.pb
