@@ -21,6 +21,7 @@ module tb_top;
   logic           flushF = 0;
   logic           stallF = 0;
   logic [DPW-1:0] PCNext;
+  logic           arst_n;
 
   logic [DPW-1:0] PCF;
   logic [DPW-1:0] instr;
@@ -33,7 +34,7 @@ module tb_top;
   logic           data_en;
   logic [DPW-1:0] input_data;
   logic [DPW-1:0] input_addr;
-  logic [DPW-1:0] data_array[16];
+  //logic [DPW-1:0] data_array[16];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
@@ -44,6 +45,7 @@ module tb_top;
          .flushF(flushF),
          .stallF(stallF),
          .PCNext(PCNext),
+         .arst_n (arst_n),
          .data_en(data_en),
          .input_data(input_data),
          .input_addr(input_addr),
@@ -68,45 +70,55 @@ module tb_top;
         clk = 0;
         #5;
       end
-      join_none
-      endtask
+    join_none
+  endtask
 
       //////////////////////////////////////////////////////////////////////////////////////////////////
       //-PROCEDURALS
       //////////////////////////////////////////////////////////////////////////////////////////////////
 
-      initial
+  initial
+  begin
+    $display("\033[7;38m####################### TEST STARTED #######################\033[0m");
+    $dumpfile("raw.vcd");
+    $dumpvars;
+  end
+
+  final
+  begin
+    $display("\033[7;38m######################## TEST ENDED ########################\033[0m");
+  end
+
+  initial
+  begin
+    start_tclk();
+    arst_n <= 0;
+    repeat (2) @(posedge clk);
+    arst_n <= 1;
+    repeat (2) @(posedge clk);
+    data_en <= 1;
+    input_addr <= 32'h0;
+    input_data <= 32'h5;
+    repeat (1) @(posedge clk);
+    data_en <= 0;
+    repeat (1) @(posedge clk);
+    data_en <= 1;
+    input_addr <= 32'h4;
+    input_data <= 32'h8;
+    repeat (1) @(posedge clk);
+    data_en <= 0;
+    PCNext <= 32'h0;
+    for(int i=0;i<16;i=i+4)
       begin
-        $display("\033[7;38m####################### TEST STARTED #######################\033[0m");
-        $dumpfile("raw.vcd");
-        $dumpvars;
+        PCNext <= 32'h0+i;
+        repeat (10) @(posedge clk);
+        $monitor("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h", PCF, instr,
+                  aluresultM, Rd2M, memwriteM, rd);
       end
+    repeat (100) @(posedge clk);
+    repeat (20) @(posedge clk);
+    //$display("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h",PCF,instr,aluresultM,Rd2M,memwriteM,rd);
+    $finish;
+  end
 
-      final
-        begin
-          $display("\033[7;38m######################## TEST ENDED ########################\033[0m");
-        end
-
-        initial
-        begin
-          for(int i=0;i<10;i++)
-          begin
-          data_array[i]=$urandom;
-          $display("%h",data_array[i]);
-          end
-          for(int i=0;i<16;i++)
-          begin
-          
-          end
-          start_tclk();
-          PCNext <= 32'b0;
-          repeat (100) @(posedge clk);
-          $monitor("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h", PCF, instr,
-                   aluresultM, Rd2M, memwriteM, rd);
-          PCNext <= 32'h00000004;
-          repeat (20) @(posedge clk);
-          //$display("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h",PCF,instr,aluresultM,Rd2M,memwriteM,rd);
-          $finish;
-        end
-
-      endmodule
+  endmodule
