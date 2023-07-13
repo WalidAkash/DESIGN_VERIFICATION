@@ -10,6 +10,7 @@ module top
     input logic           flushF,
     input logic           stallF,
     input logic [DPW-1:0] PCNext,
+    input logic           arst_n,
 
     // For store data into D_cache
     input logic           data_en,
@@ -87,6 +88,7 @@ module top
 
   logic                  regwriteM;
   logic                  resultsrcM;
+  logic        [DPW-1:0] RdM;
 
   /* logic            memwriteM;
     logic  [DPW-1:0] aluresultM;
@@ -174,6 +176,7 @@ module top
       .DPW(DPW)
   ) u_reg_file (
       .clk(clk),
+      .arst_n (arst_n),
       .addr_1(addr_1),
       .addr_2(addr_2),
       .addr_3(RdW),
