@@ -8,7 +8,7 @@ module d_cache
     input logic clk,
     input logic [DPW-1:0] addr,   // aluresultM
     input logic [DPW-1:0] wd,     // Rd2M
-    input logic [DPW-1:0] we,     // memwriteM
+    input logic           we,     // memwriteM
 
     input logic           data_en,
     input logic [DPW-1:0] input_data,

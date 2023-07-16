@@ -8,7 +8,8 @@ import rv32i_pkg::*;
     input  logic           flushF,
     input  logic           stallF,
     input  logic [DPW-1:0] PCNext,
-    output logic [DPW-1:0] PCF
+    output logic [DPW-1:0] PCF,
+    
 );
     always_ff@(posedge clk) 
     begin
