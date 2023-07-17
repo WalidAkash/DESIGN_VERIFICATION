@@ -3,7 +3,7 @@
 
 module branch_unit
   import rv32i_pkg::*;
-(
+(  
     input logic [DPW-1:0]   PCF,
     input logic [DPW-1:0]   immextE,
     input logic             branchE,
@@ -45,5 +45,9 @@ module branch_unit
       .s_i (PCSrcE),
       .y_o (PCNext)
   );
+  initial 
+  begin
+    PCNext =0;
+  end
 
 endmodule

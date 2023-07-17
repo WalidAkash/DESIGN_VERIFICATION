@@ -30,14 +30,14 @@ module top
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic                  flushF;
-  logic                  stallF;
+  logic                  flushF=0;
+  logic                  stallF=0;
 
-  logic                  stallD;
-  logic                  flushD;
+  logic                  stallD=0;
+  logic                  flushD=0;
   logic        [DPW-1:0] PCD;
 
-  logic                  flushE;  // For test purpose
+  logic                  flushE=0;  // For test purpose
 
   logic                  resultsrcE;
   logic                  memwriteE;
@@ -122,6 +122,7 @@ module top
   // Memory stage DUT
   memory_stage  memory_stage_inst (
     .clk(clk),
+    .arst_n(arst_n),
     .regwriteE(regwriteE),
     .resultsrcE(resultsrcE),
     .memwriteE(memwriteE),

@@ -19,10 +19,6 @@ module reg_file #(
 
   logic [DPW-1:0] regs[0:((2**ADW)-1)];
 
-  initial begin
-    
-  end
-
   always @(posedge clk or negedge arst_n) begin
     if(!arst_n)
     begin

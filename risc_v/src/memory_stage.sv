@@ -4,6 +4,7 @@ module memory_stage
   import rv32i_pkg::ADW;
 (
     input logic           clk,
+    input logic           arst_n,
     input logic           regwriteE,
     input logic           resultsrcE,
     input logic           memwriteE,

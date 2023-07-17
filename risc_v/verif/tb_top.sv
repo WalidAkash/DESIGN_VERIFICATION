@@ -21,7 +21,7 @@ module tb_top;
   logic           arst_n;
 
   logic [DPW-1:0] PCF;
-  logic [DPW-1:0] instr;
+  logic [DPW-1:0] instrD;
 
   logic [DPW-1:0] aluresultM;
   logic [DPW-1:0] Rd2M;
@@ -31,10 +31,8 @@ module tb_top;
   logic           data_en;
   logic [DPW-1:0] input_data;
   logic [DPW-1:0] input_addr;
-  //logic [DPW-1:0] data_array[16];
 
-  logic [DPW-1:0] PCNext;
-
+  
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +44,7 @@ module tb_top;
     .input_data(input_data),
     .input_addr(input_addr),
     .PCF(PCF),
-    .instr(instr),
+    .instrD(instrD),
     .aluresultM(aluresultM),
     .Rd2M(Rd2M),
     .memwriteM(memwriteM),
@@ -68,9 +66,9 @@ module tb_top;
     join_none
   endtask
 
-      //////////////////////////////////////////////////////////////////////////////////////////////////
-      //-PROCEDURALS
-      //////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-PROCEDURALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial
   begin
@@ -100,7 +98,7 @@ module tb_top;
     data_en <= 1;
     input_addr <= 32'h4;
     input_data <= 32'h8;
-    repeat (1) @(posedge clk);
+    /*repeat (1) @(posedge clk);
     data_en <= 0;
     PCNext <= 32'h0;
     for(int i=0;i<16;i=i+4)
@@ -112,7 +110,7 @@ module tb_top;
       end
     repeat (100) @(posedge clk);
     repeat (20) @(posedge clk);
-    //$display("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h",PCF,instr,aluresultM,Rd2M,memwriteM,rd);
+    //$display("PCF =%h,instr = %h, aluresultM=%h,Rd2M =%h, memwriteM=%h, rd =%h",PCF,instr,aluresultM,Rd2M,memwriteM,rd);*/
     $finish;
   end
 
