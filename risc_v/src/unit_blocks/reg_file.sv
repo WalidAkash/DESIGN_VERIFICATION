@@ -1,4 +1,4 @@
-// Designer   : Khadija Yeasmin Fariya 
+// Designer   : Khadija Yeasmin Fariya
 // Company    : Dsi 
 // Module Name: reg_file.sv
 

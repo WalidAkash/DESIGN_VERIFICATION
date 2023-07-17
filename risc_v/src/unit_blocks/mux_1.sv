@@ -1,7 +1,7 @@
 // A 2:1 MUX
 // ### Author Name : Walid Akash (walidakash070@gmail.com)
 
-module mux2_1
+module mux_1
   import rv32i_pkg::*;
 (
     input logic [DPW-1:0] d0_i,

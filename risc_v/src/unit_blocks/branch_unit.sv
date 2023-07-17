@@ -9,14 +9,14 @@ module branch_unit
     input logic             branchE,
     input logic             zero_flag,
 
-    output logic [DPW-1:0]  PCNext,
-    output logic            PCSrcE
+    output logic [DPW-1:0]  PCNext
 );
 
   //-SIGNALS
 
   logic [DPW-1:0] PCPlus4;
   logic [DPW-1:0] PCTarget;
+  logic           PCSrcE;
   alu_op_t        opcode = ADD_OP;
 
   //-ASSIGNMENTS
@@ -39,7 +39,7 @@ module branch_unit
       .res   (PCTarget)
   );
 
-  mux2_1 u_mux2_1 (
+  mux_1 u_mux_1 (
       .d0_i(PCPlus4),
       .d1_i(PCTarget),
       .s_i (PCSrcE),

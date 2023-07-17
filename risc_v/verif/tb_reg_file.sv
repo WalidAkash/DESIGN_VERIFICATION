@@ -91,7 +91,7 @@ module tb_reg_file;
       $display("rd_2 = ", rd_2);
       $display("wd_3 = ", wd_3);
 
-      if (we) begin
+      if (we_3) begin
         if ((rd_1 == wd_3) && (rd_2 == wd_3)) begin
           error = error;
         end else begin

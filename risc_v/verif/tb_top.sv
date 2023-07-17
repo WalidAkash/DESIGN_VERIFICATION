@@ -18,9 +18,6 @@ module tb_top;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   logic           clk;
-  logic           flushF = 0;
-  logic           stallF = 0;
-  logic [DPW-1:0] PCNext;
   logic           arst_n;
 
   logic [DPW-1:0] PCF;
@@ -36,27 +33,25 @@ module tb_top;
   logic [DPW-1:0] input_addr;
   //logic [DPW-1:0] data_array[16];
 
+  logic [DPW-1:0] PCNext;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  top  u_top (
-         .clk(clk),
-         .flushF(flushF),
-         .stallF(stallF),
-         .PCNext(PCNext),
-         .arst_n (arst_n),
-         .data_en(data_en),
-         .input_data(input_data),
-         .input_addr(input_addr),
-         .PCF(PCF),
-         .instr(instr),
-         .aluresultM(aluresultM),
-         .Rd2M(Rd2M),
-         .memwriteM(memwriteM),
-         .rd(rd)
-       );
-
+  top  top_inst (
+    .clk(clk),
+    .arst_n(arst_n),
+    .data_en(data_en),
+    .input_data(input_data),
+    .input_addr(input_addr),
+    .PCF(PCF),
+    .instr(instr),
+    .aluresultM(aluresultM),
+    .Rd2M(Rd2M),
+    .memwriteM(memwriteM),
+    .rd(rd)
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-METHODS

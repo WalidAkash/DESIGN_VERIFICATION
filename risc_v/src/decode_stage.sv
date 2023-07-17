@@ -4,8 +4,8 @@ import rv32i_pkg::ADW;
 (
   input  logic            clk,
   input  logic [DPW-1:0] PCF,
-  input  logic           flushF,
-  input  logic           stallF,
+  input  logic           flushD,
+  input  logic           stallD,
 
   output logic [DPW-1:0] instrD,
   output logic [DPW-1:0] PCD
@@ -27,13 +27,14 @@ import rv32i_pkg::ADW;
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTL
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  i_cache 
-    #(
+
+  i_cache # (
     .ElemWidth(ElemWidth),
-    .Depth    (Depth)// For number of instructions = 30. Depth = (30 X 32)/ElemWidth = 120
-  ) (
-    .PCF  (PCF),
-    .instr(instr_wire)
+    .Depth(Depth)
+  )
+  i_cache_inst (
+    .PCF(PCF),
+    .instr(instr)
   );
 
   always_ff @(posedge clk) 
