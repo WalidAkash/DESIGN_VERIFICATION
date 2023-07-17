@@ -30,15 +30,15 @@ FLIST += ../src/execute_stage.sv
 FLIST += ../src/memory_stage.sv
 FLIST += ../src/writeback_stage.sv
 FLIST += ../src/top.sv
-FLIST += tb_reg_file.sv
-FLIST += tb_i_cache.sv
-FLIST += tb_alu.sv
-FLIST += tb_control_unit.sv
+FLIST += tb_unit_blocks/tb_reg_file.sv
+FLIST += tb_unit_blocks/tb_i_cache.sv
+FLIST += tb_unit_blocks/tb_alu.sv
+FLIST += tb_unit_blocks/tb_control_unit.sv
 #FLIST += tb_decode_stage.sv
 #FLIST += tb_execute_stage.sv
 #FLIST += tb_instr_assign.sv
 #FLIST += tb_fetch_stage_reg.sv
-FLIST += tb_d_cache.sv
+FLIST += tb_unit_blocks/tb_d_cache.sv
 FLIST += tb_top.sv
 
 

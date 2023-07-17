@@ -5,7 +5,7 @@ module tb_reg_file;
 
   // bring in the testbench essentials functions and macros
   `include "../include/tb_ess.sv"
-  `include "../src/unit_blocks/reg_file.sv"
+  `include "../../src/unit_blocks/reg_file.sv"
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOCALPARAMS
