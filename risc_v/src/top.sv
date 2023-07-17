@@ -17,7 +17,7 @@ module top
     // Output Ports
     //-For test purpose ports
     output logic [DPW-1:0] PCF,
-    output logic [DPW-1:0] instr,
+    output logic [DPW-1:0] instrD,
 
     output logic [DPW-1:0] aluresultM,
     output logic [DPW-1:0] Rd2M,
@@ -35,7 +35,6 @@ module top
 
   logic                  stallD;
   logic                  flushD;
-  logic        [DPW-1:0] instrD;
   logic        [DPW-1:0] PCD;
 
   logic                  flushE;  // For test purpose
