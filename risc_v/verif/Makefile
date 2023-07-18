@@ -12,15 +12,18 @@ FLIST += ../src/unit_blocks/mux_2.sv
 FLIST += ../src/unit_blocks/i_cache.sv
 FLIST += ../src/unit_blocks/d_cache.sv
 FLIST += ../src/unit_blocks/branch_unit.sv
-FLIST += ../src/unit_blocks/adder_sub.sv
+
+#ALU
+FLIST += ../src/unit_blocks/alu/adder_sub.sv
+FLIST += ../src/unit_blocks/alu/shift_stage.sv
+FLIST += ../src/unit_blocks/alu/shifter.sv
+FLIST += ../src/unit_blocks/alu/alu.sv
+#Control Unit
+FLIST += ../src/unit_blocks/control_unit/instr_dec.sv
+FLIST += ../src/unit_blocks/control_unit/alu_dec.sv
+FLIST += ../src/unit_blocks/control_unit/control_unit.sv
+
 FLIST += ../src/unit_blocks/instr_assign_unit.sv
-FLIST += ../src/unit_blocks/shift_stage.sv
-FLIST += ../src/unit_blocks/shifter.sv
-FLIST += ../src/unit_blocks/adder_sub.sv
-FLIST += ../src/unit_blocks/alu.sv
-FLIST += ../src/unit_blocks/instr_dec.sv
-FLIST += ../src/unit_blocks/alu_dec.sv
-FLIST += ../src/unit_blocks/control_unit.sv
 FLIST += ../src/unit_blocks/extend_unit.sv
 FLIST += ../src/unit_blocks/reg_file.sv
 FLIST += ../src/unit_blocks/hazard_unit.sv

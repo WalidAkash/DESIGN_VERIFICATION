@@ -23,7 +23,7 @@ module memory_stage
     output logic  [DPW-1:0] aluresultM,
     output logic  [DPW-1:0] Rd2M,
     output logic      [4:0] RdM,
-    output logic  [DPW-1:0] PC_Next
+    output logic  [DPW-1:0] PCNext
 );
 
   //-SIGNALS
@@ -31,6 +31,7 @@ module memory_stage
   logic        [DPW-1:0] srcB;
   logic        [DPW-1:0] aluresultE;
   logic                  zero_flag;
+  logic        [DPW-1:0] PC_Next;
 
   //- DUT INSTANTIATIONS
 
@@ -60,14 +61,21 @@ module memory_stage
   );
 
 
+  assign PCNext = (arst_n == 0)? 32'h0:PC_Next;
   //-PROCEDURALS
 
-  always_ff @(posedge clk) begin
+  always_ff @(posedge clk or negedge arst_n) begin
     regwriteM <= regwriteE;
     resultsrcM <= resultsrcE;
     memwriteM <= memwriteE;
     aluresultM <= aluresultE;
     Rd2M <= Rd2E;
     RdM <= RdE;
+    
+    /* if (!arst_n) begin
+      PCNext <= 0;
+    end else begin
+      PCNext <= PC_Next;
+    end */
   end
 endmodule

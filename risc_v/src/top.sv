@@ -14,6 +14,8 @@ module top
     input  logic [DPW-1:0] input_data,
     input  logic [DPW-1:0] input_addr,
 
+    output logic [DPW-1:0] output_check,
+
     // Output Ports
     //-For test purpose ports
     output logic [DPW-1:0] PCF,
@@ -67,6 +69,7 @@ module top
   logic        [DPW-1:0] resultW;
   logic        [ADW-1:0] RdW;
   logic        [DPW-1:0] ReadDataW;
+  logic        [DPW-1:0] aluresultW;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-DUT INSTANTIATIONS
@@ -140,11 +143,12 @@ module top
     .aluresultM(aluresultM),
     .Rd2M(Rd2M),
     .RdM(RdM),
-    .PC_Next(PCNext)
+    .PCNext(PCNext)
   );
 
   // Write-Back stage DUT
   writeback_stage  writeback_stage_inst (
+    .clk (clk),
     .regwriteM(regwriteM),
     .resultsrcM(resultsrcM),
     .memwriteM(memwriteM),
@@ -154,11 +158,13 @@ module top
     .data_en(data_en),
     .input_data(input_data),
     .input_addr(input_addr),
+    .output_check(output_check),
     .regwriteW(regwriteW),
     .resultsrcW(resultsrcW),
     .aluresultW(aluresultW),
     .ReadDataW(ReadDataW),
-    .RdW(RdW)
+    .RdW(RdW),
+    .rd(rd)
   );
 
 

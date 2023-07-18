@@ -14,6 +14,8 @@ module d_cache
     input logic [DPW-1:0] input_data,
     input logic [DPW-1:0] input_addr,
 
+    output logic [DPW-1:0] output_check,
+
     output logic [DPW-1:0] rd
 );
 
@@ -37,6 +39,8 @@ module d_cache
       for (int i = 0; i < 4; i++) begin
         d_cache_mem[input_addr+i] = input_data[(8*(i+1)-1)-:8];
       end
+    end else if (!data_en) begin
+      output_check[(8*(i+1)-1)-:8] = d_cache_mem[addr+i];
     end
   end
 

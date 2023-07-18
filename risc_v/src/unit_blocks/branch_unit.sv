@@ -29,15 +29,18 @@ module branch_unit
       .opr_a (PCF),
       .opr_b (32'd4),
       .opcode(opcode),
-      .res   (PCPlus4)
+      .res   (PCPlus4),
+      .zero_flag (zero_flag)
   );
 
   adder_sub u_adder_sub_2 (
       .opr_a (PCF),
       .opr_b (immextE),
       .opcode(opcode),
-      .res   (PCTarget)
+      .res   (PCTarget),
+      .zero_flag (zero_flag)
   );
+
 
   mux_1 u_mux_1 (
       .d0_i(PCPlus4),
@@ -45,9 +48,5 @@ module branch_unit
       .s_i (PCSrcE),
       .y_o (PCNext)
   );
-  initial 
-  begin
-    PCNext =0;
-  end
-
+  
 endmodule

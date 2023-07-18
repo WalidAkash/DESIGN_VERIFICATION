@@ -41,10 +41,10 @@ module reg_file #(
     end
     else if (we_3) begin
       regs[addr_3] <= wd_3;
-    end else begin
-      rd_1 <= regs[addr_1];
-      rd_2 <= regs[addr_2];
     end
+    
+    rd_1 <= regs[addr_1];
+    rd_2 <= regs[addr_2];
 
   end
 
