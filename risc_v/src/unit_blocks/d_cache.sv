@@ -40,7 +40,9 @@ module d_cache
         d_cache_mem[input_addr+i] = input_data[(8*(i+1)-1)-:8];
       end
     end else if (!data_en) begin
-      output_check[(8*(i+1)-1)-:8] = d_cache_mem[addr+i];
+      for (int i = 0; i < 4; i++) begin
+        output_check[(8*(i+1)-1)-:8] = d_cache_mem[addr+i];
+      end
     end
   end
 

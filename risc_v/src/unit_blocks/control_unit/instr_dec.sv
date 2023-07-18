@@ -9,14 +9,14 @@ module instr_dec
   import rv32i_pkg::I_TYPE_ALU;
   import rv32i_pkg::B_TYPE;
 (
-    input  instr_type_t       instr_type,
-    output logic              branch,
-    output logic              resultsrc,
-    output logic              memwrite,
-    output logic              alusrc,
-    output logic        [1:0] immsrc,
-    output logic        [1:0] op,
-    output logic              regwrite
+  input  instr_type_t instr_type,
+  output logic        branch    ,
+  output logic        resultsrc ,
+  output logic        memwrite  ,
+  output logic        alusrc    ,
+  output logic [1:0]  immsrc    ,
+  output logic [1:0]  op        ,
+  output logic        regwrite
 );
 
   // Generating the control signals
@@ -25,7 +25,7 @@ module instr_dec
     immsrc = 2'b00;
     branch = 0;
     case (instr_type)
-      R_TYPE: begin
+      R_TYPE : begin
         resultsrc = 0;
         memwrite  = 0;
         alusrc    = 0;
@@ -33,7 +33,7 @@ module instr_dec
         op        = 2'b00;
       end
 
-      I_TYPE_LOAD: begin
+      I_TYPE_LOAD : begin
         resultsrc = 1;
         memwrite  = 0;
         alusrc    = 1;
@@ -41,7 +41,7 @@ module instr_dec
         op        = 2'b01;
       end
 
-      I_TYPE_ALU: begin
+      I_TYPE_ALU : begin
         resultsrc = 0;
         memwrite  = 0;
         alusrc    = 1;
@@ -49,7 +49,7 @@ module instr_dec
         op        = 2'b10;
       end
 
-      B_TYPE: begin
+      B_TYPE : begin
         resultsrc = 0;
         memwrite  = 0;
         alusrc    = 0;
@@ -59,7 +59,7 @@ module instr_dec
         branch    = 1;
       end
 
-      default: begin  // S type for store
+      default : begin  // S type for store
         resultsrc = 0;
         memwrite  = 1;
         alusrc    = 1;

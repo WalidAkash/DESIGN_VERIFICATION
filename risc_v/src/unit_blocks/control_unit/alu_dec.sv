@@ -19,10 +19,10 @@ module alu_dec
   import rv32i_pkg::SRL_OP;
   import rv32i_pkg::BEQ_OP;
 (
-    input  func_code_t       func_code,
-    input  logic             funct7b5,
-    input  logic       [1:0] op,
-    output alu_op_t          alu_ctrl
+  input  func_code_t func_code,
+  input  logic       funct7b5 ,
+  input  logic [1:0] op       ,
+  output alu_op_t    alu_ctrl
 );
 
   // generating alu operation control
@@ -33,27 +33,27 @@ module alu_dec
       alu_ctrl = BEQ_OP;
     end else begin
       case (func_code)
-        ADD_SUB_BEQ: begin
+        ADD_SUB_BEQ : begin
           if (funct7b5 && (op == 2'b00)) //check if it is R-type because I-type doesn't have sub
-		    begin
-            alu_ctrl = SUB_OP;
-        end else begin
+            begin
+              alu_ctrl = SUB_OP;
+            end else begin
             alu_ctrl = ADD_OP;
           end
         end
-        AND: begin
+        AND : begin
           alu_ctrl = AND_OP;
         end
-        OR: begin
+        OR : begin
           alu_ctrl = OR_OP;
         end
-        XOR: begin
+        XOR : begin
           alu_ctrl = XOR_OP;
         end
-        SLL: begin
+        SLL : begin
           alu_ctrl = SLL_OP;
         end
-        default: begin  // sra and srl type
+        default : begin  // sra and srl type
           if (funct7b5) begin
             alu_ctrl = SRA_OP;
           end else begin
