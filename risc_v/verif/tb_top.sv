@@ -106,7 +106,7 @@ module tb_top ();
       input_data <= 32'h8;
       repeat (1) @(posedge clk);
       data_en <= 0;
-      repeat (1) @(posedge clk);
+      repeat (10) @(posedge clk);
 
       arst_n <= 0;
       repeat (3) @(posedge clk);
