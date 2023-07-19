@@ -46,7 +46,7 @@ FLIST += tb_top.sv
 
 
 #// Change the TOP module name as per as the testbench module 
-TOP = tb_reg_file
+TOP = tb_top
 
 CT += *.log
 CT += *.pb
