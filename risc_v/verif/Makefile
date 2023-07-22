@@ -60,5 +60,10 @@ run: clean
 	@xelab $(TOP) -s top
 	@xsim top -runall
 
+#// for questa only
+run_questa:
+	@vlog $(FLIST)
+	@vsim $(TOP) -c -do "run -all;exit"
+
 clean:
 	@rm -rf $(CT)
