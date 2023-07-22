@@ -2,20 +2,20 @@ module decode_stage
   import rv32i_pkg::DPW;
   import rv32i_pkg::ADW;
 (
-  input  logic           clk   ,
-  input  logic [DPW-1:0] PCF   ,
-  input  logic           flushD,
-  input  logic           stallD,
-  output logic [DPW-1:0] instrD,
-  output logic [DPW-1:0] PCD
+    input  logic           clk,
+    input  logic [DPW-1:0] PCF,
+    input  logic           flushD,
+    input  logic           stallD,
+    output logic [DPW-1:0] instrD,
+    output logic [DPW-1:0] PCD
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PARAMETERS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  parameter int ElemWidth = 8  ;
-  parameter int Depth     = 120;
+  parameter int ElemWidth = 8;
+  parameter int Depth = 120;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOGIC
@@ -28,21 +28,18 @@ module decode_stage
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   i_cache #(
-    .ElemWidth(ElemWidth),
-    .Depth    (Depth    )
+      .ElemWidth(ElemWidth),
+      .Depth    (Depth)
   ) i_cache_inst (
-    .PCF  (PCF  ),
-    .instr(instr)
+      .PCF  (PCF),
+      .instr(instr)
   );
 
-  always_ff @(posedge clk)
-    begin
-      if(flushD)
-        instrD <= 0;
-      PCD <= 0;
-      if(!stallD)
-        instrD <= instr;
-      PCD <= PCF;
-    end
+  always_ff @(posedge clk) begin
+    if (flushD) instrD <= 0;
+    PCD <= 0;
+    if (!stallD) instrD <= instr;
+    PCD <= PCF;
+  end
 
 endmodule

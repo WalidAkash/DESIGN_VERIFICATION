@@ -5,10 +5,10 @@ module d_cache
     parameter int ElemWidth = 8,
     parameter int Depth = 120
 ) (
-    input logic clk,
-    input logic [DPW-1:0] addr,   // aluresultM
-    input logic [DPW-1:0] wd,     // Rd2M
-    input logic           we,     // memwriteM
+    input logic           clk,
+    input logic [DPW-1:0] addr,  // aluresultM
+    input logic [DPW-1:0] wd,    // Rd2M
+    input logic           we,    // memwriteM
 
     input logic           data_en,
     input logic [DPW-1:0] input_data,

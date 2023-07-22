@@ -17,7 +17,7 @@ module instr_assign_unit
     output logic        [DPW-1:7] instr_ext
 );
 
-//-PROCEDURALS
+  //-PROCEDURALS
 
   always_comb begin
     $cast(instr_type, instrD[6:0]);
