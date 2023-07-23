@@ -2,10 +2,11 @@
 // Company : DSi
 
 module instr_assign_unit
-  import rv32i_pkg::*;
-#(
-    parameter int ADW = 5
-) (
+  import rv32i_pkg::DPW;
+  import rv32i_pkg::ADW;
+  import rv32i_pkg::instr_type_t;
+  import rv32i_pkg::func_code_t;
+(
     input logic [DPW-1:0] instrD,
 
     output instr_type_t           instr_type,

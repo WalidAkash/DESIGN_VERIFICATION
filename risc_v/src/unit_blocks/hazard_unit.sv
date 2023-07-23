@@ -1,7 +1,7 @@
 // ### Author : Razu Ahamed(en.razu.ahamed@gmail.com)
 // ### Company: DSi
 module hazard_unit
-  import rv32i_pkg::*;
+  import rv32i_pkg::ADW;
 (
     input  bit             clk,
     input  logic           regwriteE,

@@ -1,12 +1,11 @@
 // Designer : Walid Akash (walidakash070@gmail.com)
-// Company  : DSi 
+// Company  : DSi
 
 module i_cache
-  import rv32i_pkg::*;
-#(
-    parameter int ElemWidth = 8,
-    parameter int Depth = 120  // For number of instructions = 30. Depth = (30 X 32)/ElemWidth = 120
-) (
+  import rv32i_pkg::DPW;
+  import rv32i_pkg::ElemWidth;
+  import rv32i_pkg::Depth;
+(
     input logic [DPW-1:0] PCF,
 
     output logic [DPW-1:0] instr

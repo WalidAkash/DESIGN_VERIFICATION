@@ -2,7 +2,8 @@
 // Company : DSi
 
 module branch_unit
-  import rv32i_pkg::*;
+  import rv32i_pkg::DPW;
+  import rv32i_pkg::alu_op_t;
 (
     input  logic [DPW-1:0] PCF,
     input  logic [DPW-1:0] immextE,

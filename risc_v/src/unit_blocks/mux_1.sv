@@ -2,12 +2,12 @@
 // ### Author Name : Walid Akash (walidakash070@gmail.com)
 
 module mux_1
-  import rv32i_pkg::*;
+  import rv32i_pkg::DPW;
 (
-  input  logic [DPW-1:0] d0_i,
-  input  logic [DPW-1:0] d1_i,
-  input  logic           s_i ,
-  output logic [DPW-1:0] y_o
+    input  logic [DPW-1:0] d0_i,
+    input  logic [DPW-1:0] d1_i,
+    input  logic           s_i,
+    output logic [DPW-1:0] y_o
 );
 
   //-Assignement

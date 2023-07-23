@@ -2,10 +2,10 @@
 // Company    : Dsi
 // Module Name: reg_file.sv
 
-module reg_file #(
-    parameter int ADW = 5,
-    parameter int DPW = 32
-) (
+module reg_file
+  import rv32i_pkg::DPW;
+  import rv32i_pkg::ADW;
+(
     input  logic           clk,     // clock
     input  logic           arst_n,  // for reset
     input  logic [ADW-1:0] addr_1,

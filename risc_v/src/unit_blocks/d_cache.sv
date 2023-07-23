@@ -1,10 +1,9 @@
 module d_cache
   import rv32i_pkg::DPW;
   import rv32i_pkg::ADW;
-#(
-    parameter int ElemWidth = 8,
-    parameter int Depth = 120
-) (
+  import rv32i_pkg::ElemWidth;
+  import rv32i_pkg::Depth;
+(
     input logic           clk,
     input logic [DPW-1:0] addr,  // aluresultM
     input logic [DPW-1:0] wd,    // Rd2M

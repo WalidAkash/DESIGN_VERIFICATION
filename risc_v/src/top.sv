@@ -1,9 +1,11 @@
-// Designer : Walid Akash
+// Designer : Walid Akash (walidakash070@gmail.com)
 // Company : DSi
 // Description : Top module for decode stage, Execute stage and Memory Stage
 
 module top
-  import rv32i_pkg::*;
+  import rv32i_pkg::DPW;
+  import rv32i_pkg::ADW;
+  import rv32i_pkg::alu_op_t;
 (
     // Input Ports
     input  logic           clk,
@@ -27,14 +29,14 @@ module top
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic              flushF = 0;
-  logic              stallF = 0;
+  logic              flushF;
+  logic              stallF;
 
-  logic              stallD = 0;
-  logic              flushD = 0;
+  logic              stallD;
+  logic              flushD;
   logic    [DPW-1:0] PCD;
 
-  logic              flushE = 0;  // For test purpose
+  logic              flushE;  // For test purpose
 
   logic              resultsrcE;
   logic              memwriteE;
@@ -53,12 +55,6 @@ module top
   logic    [ADW-1:0] RdM;
   logic    [DPW-1:0] PCNext;
 
-  /* logic            memwriteM;
-	logic  [DPW-1:0] aluresultM;
-	logic  [DPW-1:0] Rd2M;
-
-	logic  [DPW-1:0] rd; */
-
   logic              regwriteW;
   logic              resultsrcW;
   logic    [DPW-1:0] resultW;
@@ -71,7 +67,7 @@ module top
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Fetch stage DUT
-  fetch_stage fetch_stage_inst (
+  fetch_stage u_fetch_stage (
       .clk       (clk),
       .resultsrcW(resultsrcW),
       .aluresultW(aluresultW),
@@ -85,7 +81,7 @@ module top
   );
 
   // Decode stage DUT
-  decode_stage decode_stage_inst (
+  decode_stage u_decode_stage (
       .clk   (clk   ),
       .PCF   (PCF   ),
       .flushD(flushD),
@@ -95,7 +91,7 @@ module top
   );
 
   // Execute stage DUT
-  execute_stage execute_stage_inst (
+  execute_stage u_execute_stage (
       .clk       (clk),
       .instrD    (instrD),
       .PCD       (PCD),
@@ -118,7 +114,7 @@ module top
   );
 
   // Memory stage DUT
-  memory_stage memory_stage_inst (
+  memory_stage u_memory_stage (
       .clk       (clk),
       .arst_n    (arst_n),
       .regwriteE (regwriteE),
@@ -142,7 +138,7 @@ module top
   );
 
   // Write-Back stage DUT
-  writeback_stage writeback_stage_inst (
+  writeback_stage u_writeback_stage (
       .clk         (clk),
       .regwriteM   (regwriteM),
       .resultsrcM  (resultsrcM),
@@ -164,20 +160,20 @@ module top
 
 
   // Hazard Unit DUT Instantiation
-  /*   hazard_unit
-	u_hazard_unit (
-	.clk (clk ),
-	.regwriteE (regwriteE ),
-	.Rs1D (addr_1 ),
-	.Rs2D (addr_2 ),
-	.RdE (RdE ),
-	.RdM (RdM ),
-	.PCSrcE (PCSrcE ),
-	.stallF (stallF ),
-	.flushF (flushF ),
-	.stallD (stallD ),
-	.flushD (flushD ),
-	.flushE  ( flushE)
-	);
-	*/
+
+  hazard_unit u_hazard_unit (
+      .clk(clk),
+      .regwriteE(regwriteE),
+      .Rs1D(Rs1D),
+      .Rs2D(Rs2D),
+      .RdE(RdE),
+      .RdM(RdM),
+      .PCSrcE(PCSrcE),
+      .stallF(stallF),
+      .flushF(flushF),
+      .stallD(stallD),
+      .flushD(flushD),
+      .flushE(flushE)
+  );
+
 endmodule

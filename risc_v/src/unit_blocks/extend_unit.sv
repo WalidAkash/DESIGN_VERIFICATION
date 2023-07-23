@@ -3,7 +3,7 @@
 // Description : This module shifts the instruction by an appropriate amount
 
 module extend_unit
-  import rv32i_pkg::*;
+  import rv32i_pkg::DPW;
 (
     input  logic [DPW-1:7] instr_ext,
     input  logic [    1:0] immsrcD,
