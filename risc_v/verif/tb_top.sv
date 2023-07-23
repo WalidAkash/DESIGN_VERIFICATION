@@ -65,6 +65,20 @@ module tb_top ();
     join_none
   endtask
 
+  task data_in;
+    input logic [DPW-1:0] x;
+    input logic [DPW-1:0] y;
+
+    begin
+      @(posedge clk) data_en <= 1;
+      input_addr <= x;
+      input_data <= y;
+      @(posedge clk);
+      data_en <= 0;
+      @(posedge clk);
+    end
+  endtask
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,17 +103,11 @@ module tb_top ();
   initial begin
 
     start_tclk();
-    @(posedge clk) data_en <= 1;
-    input_addr <= 32'h0;
-    input_data <= 32'h5;
-    repeat (1) @(posedge clk);
-    data_en <= 0;
-    repeat (1) @(posedge clk);
-    data_en <= 1;
-    input_addr <= 32'h4;
-    input_data <= 32'h8;
-    repeat (1) @(posedge clk);
-    data_en <= 0;
+    data_in(32'h0, 32'h4);
+    data_in(32'h4, 32'h5);
+    data_in(32'h8, 32'h6);
+    data_in(32'hC, 32'h7);
+
     repeat (10) @(posedge clk);
 
     arst_n <= 0;

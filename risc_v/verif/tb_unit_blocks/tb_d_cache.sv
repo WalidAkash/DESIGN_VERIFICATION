@@ -1,4 +1,4 @@
-module tb_d_cache;
+module tb_d_cache ();
   import rv32i_pkg::DPW;
   import rv32i_pkg::ADW;
   // Parameters
@@ -17,20 +17,34 @@ module tb_d_cache;
 
   d_cache #(
       .ElemWidth(ElemWidth),
-      .Depth(Depth)
+      .Depth    (Depth)
   ) d_cache_dut (
-      .clk(clk),
-      .addr(addr),
-      .wd(wd),
-      .we(we),
-      .data_en(data_en),
+      .clk       (clk),
+      .addr      (addr),
+      .wd        (wd),
+      .we        (we),
+      .data_en   (data_en),
       .input_data(input_data),
       .input_addr(input_addr),
-      .rd(rd)
+      .rd        (rd)
   );
 
 
   always #5 clk = !clk;
+
+  task static data_in;
+    input logic [DPW-1:0] x;
+    input logic [DPW-1:0] y;
+
+    begin
+      @(posedge clk) data_en <= 1;
+      input_addr <= x;
+      input_data <= y;
+      @(posedge clk);
+      data_en <= 0;
+      @(posedge clk);
+    end
+  endtask
 
   initial begin
     $display("\033[7;38m####################### TEST STARTED #######################\033[0m");
@@ -43,18 +57,25 @@ module tb_d_cache;
   end
 
   initial begin
-    data_en <= 1;
-    input_addr <= 32'h0;
-    input_data <= 32'h05;
+    data_in(32'h0, 32'h4);
+    data_in(32'h4, 32'h5);
+    data_in(32'h8, 32'h6);
+    data_in(32'hC, 32'h7);
     repeat (2) @(posedge clk);
 
     data_en <= 0;
-    we   <= 0;
+    we <= 0;
 
     addr <= 32'h0;
     repeat (2) @(posedge clk);
 
     $display("rd1 = %h", rd);
+    repeat (2) @(posedge clk);
+
+    addr <= 32'h4;
+    repeat (2) @(posedge clk);
+
+    $display("rd2 = %h", rd);
     repeat (2) @(posedge clk);
 
     we   <= 1;
@@ -66,7 +87,7 @@ module tb_d_cache;
     addr <= 32'h7;
     repeat (2) @(posedge clk);
 
-    $display("rd2 = %h", rd);
+    $display("rd3 = %h", rd);
     repeat (2) @(posedge clk);
     repeat (2) @(posedge clk);
 
