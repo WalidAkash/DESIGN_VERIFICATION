@@ -24,6 +24,7 @@ module writeback_stage
     output logic [    4:0] RdW,
     output logic [DPW-1:0] rd
 );
+    logic [DPW-1:0] rd_temp;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
@@ -41,12 +42,12 @@ module writeback_stage
       .output_check(output_check),
       .rd          (rd)
   );
-
+  assign rd_temp = rd;
   always @(posedge clk) begin
     regwriteW  <= regwriteM;
     resultsrcW <= resultsrcM;
     aluresultW <= aluresultM;
-    ReadDataW  <= rd;
+    ReadDataW  <= rd_temp;
     RdW        <= RdM;
 
   end
