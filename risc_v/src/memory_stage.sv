@@ -22,7 +22,8 @@ module memory_stage
     output logic    [DPW-1:0] aluresultM,
     output logic    [DPW-1:0] Rd2M,
     output logic    [    4:0] RdM,
-    output logic    [DPW-1:0] PCNext
+    output logic    [DPW-1:0] PCNext,
+    output logic              PCSrcE
 );
 
   //-SIGNALS
@@ -56,9 +57,9 @@ module memory_stage
       .immextE  (immextE),
       .branchE  (branchE),
       .zero_flag(zero_flag),
-      .PCNext   (PC_Next)
+      .PCNext   (PC_Next),
+      .PCSrcE   (PCSrcE)
   );
-
 
   assign PCNext = (arst_n == 0) ? 32'h0 : PC_Next;
   //-PROCEDURALS

@@ -13,6 +13,8 @@ module execute_stage
     input  logic    [ADW-1:0] addr_3,
     input  logic    [DPW-1:0] wd_3,
     input  logic              flushE,
+    output logic    [ADW-1:0] addr_1,
+    output logic    [ADW-1:0] addr_2,
     output logic              regwriteE,
     output logic              resultsrcE,
     output logic              memwriteE,
@@ -31,8 +33,6 @@ module execute_stage
   instr_type_t           instr_type;
   func_code_t            func_code;
   logic                  funct7b5;
-  logic        [ADW-1:0] addr_1;
-  logic        [ADW-1:0] addr_2;
   logic        [    4:0] RdD;
   logic        [DPW-1:7] instr_ext;
 
@@ -52,9 +52,7 @@ module execute_stage
   //-DUT INSTANTIATION
 
   // instr_assign_unit DUT
-  instr_assign_unit #(
-      .ADW(ADW)
-  ) u_instr_assign_unit (
+  instr_assign_unit u_instr_assign_unit (
       .instrD    (instrD),
       .instr_type(instr_type),
       .func_code (func_code),
@@ -80,10 +78,7 @@ module execute_stage
   );
 
   // Reg File DUT Instantiation
-  reg_file #(
-      .ADW(ADW),
-      .DPW(DPW)
-  ) u_reg_file (
+  reg_file u_reg_file (
       .clk   (clk   ),
       .arst_n(arst_n),
       .addr_1(addr_1),

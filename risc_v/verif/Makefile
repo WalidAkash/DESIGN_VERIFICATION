@@ -33,6 +33,7 @@ FLIST += ../src/execute_stage.sv
 FLIST += ../src/memory_stage.sv
 FLIST += ../src/writeback_stage.sv
 FLIST += ../src/top.sv
+FLIST += ../src/top_wh.sv
 FLIST += tb_unit_blocks/tb_reg_file.sv
 FLIST += tb_unit_blocks/tb_i_cache.sv
 FLIST += tb_unit_blocks/tb_alu.sv

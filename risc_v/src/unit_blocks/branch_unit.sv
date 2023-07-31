@@ -4,19 +4,20 @@
 module branch_unit
   import rv32i_pkg::DPW;
   import rv32i_pkg::alu_op_t;
+  import rv32i_pkg::ADD_OP;
 (
     input  logic [DPW-1:0] PCF,
     input  logic [DPW-1:0] immextE,
     input  logic           branchE,
     input  logic           zero_flag,
-    output logic [DPW-1:0] PCNext
+    output logic [DPW-1:0] PCNext,
+    output logic           PCSrcE
 );
 
   //-SIGNALS
 
   logic    [DPW-1:0] PCPlus4;
   logic    [DPW-1:0] PCTarget;
-  logic              PCSrcE;
   alu_op_t           opcode = ADD_OP;
 
   //-ASSIGNMENTS

@@ -49,11 +49,14 @@ module top
   logic    [ADW-1:0] RdE;
   logic    [DPW-1:0] immextE;
   logic    [DPW-1:0] PCE;
+  logic    [ADW-1:0] addr_1;
+  logic    [ADW-1:0] addr_2;
 
   logic              regwriteM;
   logic              resultsrcM;
   logic    [ADW-1:0] RdM;
   logic    [DPW-1:0] PCNext;
+  logic              PCSrcE;
 
   logic              regwriteW;
   logic              resultsrcW;
@@ -100,6 +103,8 @@ module top
       .addr_3    (RdW),
       .wd_3      (resultW),
       .flushE    (flushE),
+      .addr_1    (addr_1),
+      .addr_2    (addr_2),
       .regwriteE (regwriteE),
       .resultsrcE(resultsrcE),
       .memwriteE (memwriteE),
@@ -112,6 +117,7 @@ module top
       .immextE   (immextE),
       .PCE       (PCE)
   );
+
 
   // Memory stage DUT
   memory_stage u_memory_stage (
@@ -134,8 +140,10 @@ module top
       .aluresultM(aluresultM),
       .Rd2M      (Rd2M),
       .RdM       (RdM),
-      .PCNext    (PCNext)
+      .PCNext    (PCNext),
+      .PCSrcE    (PCSrcE)
   );
+
 
   // Write-Back stage DUT
   writeback_stage u_writeback_stage (
@@ -164,8 +172,8 @@ module top
   hazard_unit u_hazard_unit (
       .clk(clk),
       .regwriteE(regwriteE),
-      .Rs1D(Rs1D),
-      .Rs2D(Rs2D),
+      .Rs1D(addr_1),
+      .Rs2D(addr_2),
       .RdE(RdE),
       .RdM(RdM),
       .PCSrcE(PCSrcE),

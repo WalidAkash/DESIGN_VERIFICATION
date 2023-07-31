@@ -1,6 +1,8 @@
 module decode_stage
   import rv32i_pkg::DPW;
   import rv32i_pkg::ADW;
+  import rv32i_pkg::ElemWidth;
+  import rv32i_pkg::Depth;
 (
     input  logic           clk,
     input  logic [DPW-1:0] PCF,
@@ -9,13 +11,6 @@ module decode_stage
     output logic [DPW-1:0] instrD,
     output logic [DPW-1:0] PCD
 );
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-PARAMETERS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  parameter int ElemWidth = 8;
-  parameter int Depth = 120;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOGIC
@@ -27,10 +22,7 @@ module decode_stage
   //-RTL
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  i_cache #(
-      .ElemWidth(ElemWidth),
-      .Depth    (Depth)
-  ) i_cache_inst (
+  i_cache u_i_cache (
       .PCF  (PCF),
       .instr(instr)
   );

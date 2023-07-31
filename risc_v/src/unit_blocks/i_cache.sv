@@ -29,17 +29,41 @@ module i_cache
     i_cache_mem[6]  = 8'h42;
     i_cache_mem[7]  = 8'h00;
 
-    // 0x00428333	add x6, x5, x4
-    i_cache_mem[8]  = 8'h33;
-    i_cache_mem[9]  = 8'h83;
-    i_cache_mem[10] = 8'h42;
+    // 0x00C3A383 lw x7, 12(x7)
+    i_cache_mem[8]  = 8'h83;
+    i_cache_mem[9]  = 8'hA3;
+    i_cache_mem[10] = 8'h0C;
     i_cache_mem[11] = 8'h00;
 
-    // 0x00602423	sw x6, 8(x0) 
-    i_cache_mem[12] = 8'h23;
+    // 0x01042403 lw x8, 16(x8)
+    i_cache_mem[12] = 8'h03;
     i_cache_mem[13] = 8'h24;
-    i_cache_mem[14] = 8'h60;
-    i_cache_mem[15] = 8'h00;
+    i_cache_mem[14] = 8'h04;
+    i_cache_mem[15] = 8'h01;
+
+    // 0x00428333	add x6, x5, x4
+    i_cache_mem[16] = 8'h33;
+    i_cache_mem[17] = 8'h83;
+    i_cache_mem[18] = 8'h42;
+    i_cache_mem[19] = 8'h00;
+
+    // 0x008384B3 add x9, x7, x8
+    i_cache_mem[20] = 8'hB3;
+    i_cache_mem[21] = 8'h84;
+    i_cache_mem[22] = 8'h83;
+    i_cache_mem[23] = 8'h00;
+
+    // 0x00602423	sw x6, 8(x0)
+    i_cache_mem[24] = 8'h23;
+    i_cache_mem[25] = 8'h24;
+    i_cache_mem[26] = 8'h60;
+    i_cache_mem[27] = 8'h00;
+
+    // 0x00902A23 sw x9, 20(x0)
+    i_cache_mem[28] = 8'h23;
+    i_cache_mem[29] = 8'h2A;
+    i_cache_mem[30] = 8'h90;
+    i_cache_mem[31] = 8'h00;
 
   end
 

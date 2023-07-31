@@ -36,7 +36,7 @@ module tb_top ();
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  top top_inst (
+  /* top u_top (
       .clk         (clk),
       .arst_n      (arst_n),
       .data_en     (data_en),
@@ -49,6 +49,21 @@ module tb_top ();
       .Rd2M        (Rd2M),
       .memwriteM   (memwriteM),
       .rd          (rd)
+  ); */
+
+  top_wh u_top_wh (
+      .clk(clk),
+      .arst_n(arst_n),
+      .data_en(data_en),
+      .input_data(input_data),
+      .input_addr(input_addr),
+      .output_check(output_check),
+      .PCF(PCF),
+      .instrD(instrD),
+      .aluresultM(aluresultM),
+      .Rd2M(Rd2M),
+      .memwriteM(memwriteM),
+      .rd(rd)
   );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +122,18 @@ module tb_top ();
     data_in(32'h4, 32'h5);
     data_in(32'h8, 32'h6);
     data_in(32'hC, 32'h7);
+    data_in(32'h10, 32'h8);
+    data_in(32'h14, 32'h9);
+    data_in(32'h18, 32'h8);
+    data_in(32'h1C, 32'h4);
+    data_in(32'h20, 32'h5);
+    data_in(32'h24, 32'h6);
+    data_in(32'h28, 32'h7);
+    data_in(32'h2C, 32'h8);
+    data_in(32'h30, 32'hA);
+    data_in(32'h34, 32'hB);
+    data_in(32'h38, 32'hC);
+    data_in(32'h3C, 32'hD);
 
     repeat (10) @(posedge clk);
 
