@@ -1,3 +1,6 @@
+// Designer : Walid Akash (walidakash070@gmail.com)
+// Company : DSi
+
 module execute_stage
   import rv32i_pkg::instr_type_t;
   import rv32i_pkg::func_code_t;
@@ -92,9 +95,10 @@ module execute_stage
 
   // Extend Unit DUT Instantiation
   extend_unit u_extend_unit (
+      .clk(clk),
       .instr_ext(instr_ext),
-      .immsrcD  (immsrcD),
-      .immextD  (immextD)
+      .immsrcD(immsrcD),
+      .immextD(immextD)
   );
 
   //-PROCEDURALS

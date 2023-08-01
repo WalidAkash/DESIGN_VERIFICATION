@@ -1,3 +1,6 @@
+# Designer : Walid Akash (walidakash070@gmail.com)
+# Company : DSi
+
 lw x4, 0(x4)          # Load memory address = [x4 + 0(Offset)] 's value in register x4
 lw x5, 4(x5)          # Load memory address = [x5 + 4(Offset)] 's value in register x5
 lw x7, 12(x7)

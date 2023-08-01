@@ -1,3 +1,6 @@
+// Designer : Walid Akash (walidakash070@gmail.com)
+// Company : DSi
+
 module memory_stage
   import rv32i_pkg::alu_op_t;
   import rv32i_pkg::DPW;

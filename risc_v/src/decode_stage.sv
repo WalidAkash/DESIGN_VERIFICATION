@@ -1,3 +1,6 @@
+// Designer : Walid Akash (walidakash070@gmail.com)
+// Company : DSi
+
 module decode_stage
   import rv32i_pkg::DPW;
   import rv32i_pkg::ADW;

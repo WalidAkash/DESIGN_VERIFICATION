@@ -32,7 +32,7 @@ module i_cache
     // 0x00C3A383 lw x7, 12(x7)
     i_cache_mem[8]  = 8'h83;
     i_cache_mem[9]  = 8'hA3;
-    i_cache_mem[10] = 8'h0C;
+    i_cache_mem[10] = 8'hC3;
     i_cache_mem[11] = 8'h00;
 
     // 0x01042403 lw x8, 16(x8)

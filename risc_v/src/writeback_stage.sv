@@ -24,7 +24,8 @@ module writeback_stage
     output logic [    4:0] RdW,
     output logic [DPW-1:0] rd
 );
-    logic [DPW-1:0] rd_temp;
+
+  logic [DPW-1:0] rd_temp;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
