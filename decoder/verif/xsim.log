@@ -1,0 +1,177 @@
+#-----------------------------------------------------------
+# xsim v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Sun Sep  3 15:11:26 2023
+# Process ID: 4355
+# Current directory: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif
+# Command line: xsim -mode tcl -source {xsim.dir/top/xsim_script.tcl}
+# Log file: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/xsim.log
+# Journal file: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/xsim.jou
+# Running On: akash-Inspiron-15-5510, OS: Linux, CPU Frequency: 1411.156 MHz, CPU Physical cores: 4, Host memory: 16492 MB
+#-----------------------------------------------------------
+source xsim.dir/top/xsim_script.tcl
+# xsim {top} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+[7;38m####################### TEST STARTED #######################[0m
+Test -------------------------------------           0
+a_i = 01
+
+a_valid_i = 0
+
+a_i_m = 01
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+Test -------------------------------------           1
+a_i = 10
+
+a_valid_i = 0
+
+a_i_m = 10
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+Test -------------------------------------           2
+a_i = 10
+
+a_valid_i = 1
+
+a_i_m = 10
+
+a_valid_i_m = 1
+
+d_o = 0100
+
+d_o_m = 0100
+
+Error =           0
+Test -------------------------------------           3
+a_i = 10
+
+a_valid_i = 1
+
+a_i_m = 10
+
+a_valid_i_m = 1
+
+d_o = 0100
+
+d_o_m = 0100
+
+Error =           0
+Test -------------------------------------           4
+a_i = 10
+
+a_valid_i = 1
+
+a_i_m = 10
+
+a_valid_i_m = 1
+
+d_o = 0100
+
+d_o_m = 0100
+
+Error =           0
+Test -------------------------------------           5
+a_i = 10
+
+a_valid_i = 1
+
+a_i_m = 10
+
+a_valid_i_m = 1
+
+d_o = 0100
+
+d_o_m = 0100
+
+Error =           0
+Test -------------------------------------           6
+a_i = 10
+
+a_valid_i = 0
+
+a_i_m = 10
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+Test -------------------------------------           7
+a_i = 01
+
+a_valid_i = 0
+
+a_i_m = 01
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+Test -------------------------------------           8
+a_i = 00
+
+a_valid_i = 0
+
+a_i_m = 00
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+Test -------------------------------------           9
+a_i = 10
+
+a_valid_i = 1
+
+a_i_m = 10
+
+a_valid_i_m = 1
+
+d_o = 0100
+
+d_o_m = 0100
+
+Error =           0
+Test -------------------------------------          10
+a_i = 00
+
+a_valid_i = 0
+
+a_i_m = 00
+
+a_valid_i_m = 0
+
+d_o = 0000
+
+d_o_m = 0000
+
+Error =           0
+[1;32m[PASS][0m decoder is passed [1;33m[decoder_tb][0m
+[7;38m######################## TEST ENDED ########################[0m
+$finish called at time : 900 ns : File "/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/decoder_tb.sv" Line 96
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Sep  3 15:11:33 2023...

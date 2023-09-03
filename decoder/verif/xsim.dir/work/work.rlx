@@ -1,0 +1,8 @@
+0.7
+2020.2
+May  7 2023
+15:10:42
+/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/src/decoder.sv,1692559730,systemVerilog,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/decoder_tb.sv,,decoder,,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/include,,,,,
+/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/decoder_tb.sv,1693732266,systemVerilog,,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/include/tb_ns.sv,decoder_tb,,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/include,,,,,
+/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/demux/src/demux.sv,1692680924,systemVerilog,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/src/decoder.sv,,demux,,,/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/include,,,,,
+/home/akash/office/dv/all_designs/DESIGN_VERIFICATION/include/tb_ns.sv,1692685806,verilog,,,,,,,,,,,,

@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# xsim v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Sun Sep  3 15:11:26 2023
+# Process ID: 4355
+# Current directory: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif
+# Command line: xsim -mode tcl -source {xsim.dir/top/xsim_script.tcl}
+# Log file: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/xsim.log
+# Journal file: /home/akash/office/dv/all_designs/DESIGN_VERIFICATION/decoder/verif/xsim.jou
+# Running On: akash-Inspiron-15-5510, OS: Linux, CPU Frequency: 1411.156 MHz, CPU Physical cores: 4, Host memory: 16492 MB
+#-----------------------------------------------------------
+source xsim.dir/top/xsim_script.tcl
+run -all
